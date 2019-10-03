@@ -20,3 +20,6 @@ def roomDetailPage(id):
 def reserveRoomPage(id):
     return 'Reserve room page'
 
+@app.route('/bookings')
+def bookingsPage():
+    return 'List of bookings page'
