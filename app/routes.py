@@ -1,8 +1,11 @@
+from flask import render_template
+
 from app import app
+
 
 @app.route('/')
 def homePage():
-    return 'Hello world'
+    return render_template('home.html')
 
 @app.route('/auth')
 def authPage():
