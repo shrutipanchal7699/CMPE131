@@ -25,4 +25,4 @@ def reserveRoomPage(id):
 
 @app.route('/bookings')
 def bookingsPage():
-    return 'List of bookings page'
+    return render_template('bookings.html')
