@@ -9,7 +9,7 @@ def homePage():
 
 @app.route('/auth')
 def authPage():
-    return 'Login and Registration Page'
+    return render_template('auth.html')
 
 @app.route('/rooms')
 def roomListPage():
