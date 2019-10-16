@@ -13,7 +13,7 @@ def authPage():
 
 @app.route('/rooms')
 def roomListPage():
-    return 'page to filter and search for rooms'
+    return render_template('roomList.html')
 
 @app.route('/rooms/<id>')
 def roomDetailPage(id):
