@@ -17,7 +17,7 @@ def roomListPage():
 
 @app.route('/rooms/<id>')
 def roomDetailPage(id):
-    return 'room detail page'
+    return render_template('roomDetail.html')
 
 @app.route('/rooms/<id>/book')
 def reserveRoomPage(id):
