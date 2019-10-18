@@ -1,7 +1,10 @@
 from flask import render_template, redirect, url_for
+from werkzeug import generate_password_hash
 
-from app import app
+from app import app, db
 from app.forms import LoginForm, RegisterForm
+from app.models import User
+
 
 @app.route('/')
 def homePage():
@@ -11,13 +14,14 @@ def homePage():
 def authPage():
     login_form = LoginForm()
     register_form = RegisterForm()
+    if login_form.login_submit.data and login_form.validate():
+        print('POSTED LOGIN FORM')
+        return login_form.email.data + ' ' + login_form.password.data
 
-    if login_form.validate_on_submit():
-        print(login_form.validate())
-        return login_form.username.data + ' ' + login_form.password.data
-
-    if register_form.validate_on_submit():
-        return register_form
+    if register_form.register_submit.data and register_form.validate():
+        pw_hash = generate_password_hash(register_form.password.data)
+        new_user = User.create(email=register_form.email.data, password_hash=pw_hash)
+        return 'New User created!' + new_user.email
 
     data = {
         'login_form': login_form,

@@ -12,18 +12,19 @@
     {{ login_form.password }} <br/>
     {{ login_form.remember.label }}
     {{ login_form.remember }} <br/>
-    <button type="submit">Submit</button>
+    {{ login_form.login_submit }}
 </form>
 
 <h2>Registration</h2>
 <form method="POST" action="{{ url_for('authPage') }}"/>
     {{ register_form.csrf_token }}
+
     {{ register_form.email.label }}
     {{ register_form.email }} <br/>
     {{ register_form.password.label }}
     {{ register_form.password }} <br/>
+    {{ register_form.register_submit }}
 
-    <button type="submit">Submit</button>
 </form>
 
 {% endblock %}
