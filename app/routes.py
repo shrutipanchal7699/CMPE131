@@ -16,6 +16,9 @@ def authPage():
         print(login_form.validate())
         return login_form.username.data + ' ' + login_form.password.data
 
+    if register_form.validate_on_submit():
+        return register_form
+
     data = {
         'login_form': login_form,
         'register_form': register_form

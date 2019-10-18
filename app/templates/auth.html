@@ -6,8 +6,8 @@
 <form method="POST" action="{{ url_for('authPage') }}"/>
     {{ login_form.csrf_token }}
 
-    {{ login_form.username.label }}
-    {{ login_form.username }} <br/>
+    {{ login_form.email.label }}
+    {{ login_form.email }} <br/>
     {{ login_form.password.label }}
     {{ login_form.password }} <br/>
     {{ login_form.remember.label }}
@@ -20,8 +20,6 @@
     {{ register_form.csrf_token }}
     {{ register_form.email.label }}
     {{ register_form.email }} <br/>
-    {{ register_form.username.label }}
-    {{ register_form.username }} <br/>
     {{ register_form.password.label }}
     {{ register_form.password }} <br/>
 
