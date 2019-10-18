@@ -1,6 +1,6 @@
 from flask import render_template, redirect, url_for
 
-from app import app, db, login_manager
+from app import app, login_manager
 from app.forms import LoginForm, RegisterForm
 from app.models import User
 from flask_login import login_user, current_user
@@ -27,6 +27,8 @@ def authPage():
         new_user = User.create(email=register_form.email.data, password=register_form.password.data)
         login_user(new_user)
         return redirect(url_for('roomListPage'))
+        # If email is not unique
+        register_form.raise_email_not_unique_error()
 
     data = {
         'login_form': login_form,

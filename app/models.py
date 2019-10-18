@@ -23,7 +23,7 @@ class User(UserMixin, db.Model):
     @classmethod
     def get_by_id(cls, id):
         return cls.query.get(int(id))
-
+    
     #Accepts username and password, return the user if the login information is good
     @classmethod
     def check_login(cls, email, password):
