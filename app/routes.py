@@ -3,7 +3,7 @@ from flask import render_template, redirect, url_for
 from app import app, login_manager
 from app.forms import LoginForm, RegisterForm
 from app.models import User
-from flask_login import login_user, current_user
+from flask_login import login_user, current_user, logout_user
 
 @app.route('/')
 def homePage():
@@ -14,6 +14,9 @@ login_manager.login_view = 'authPage'
 
 @app.route('/auth', methods=['GET', 'POST'])
 def authPage():
+    if current_user.is_authenticated:
+        return redirect(url_for('roomListPage'))
+
     login_form = LoginForm()
     register_form = RegisterForm()
     # Handles login form submission
@@ -37,6 +40,12 @@ def authPage():
 
     return render_template('auth.html', **data)
 
+@app.route('/logout')
+def logout():
+    if current_user.is_authenticated:
+        logout_user()
+    return redirect(url_for('authPage'))
+
 @app.route('/rooms')
 def roomListPage():
     return render_template('roomList.html')
@@ -52,3 +61,4 @@ def reserveRoomPage(id):
 @app.route('/bookings')
 def bookingsPage():
     return render_template('bookings.html')
+
