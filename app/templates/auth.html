@@ -1,30 +1,24 @@
 {% extends 'base.html' %}
 
 {% block body %}
+{% from "_formhelpers.html" import render_field %}
+
 <h1>Login and Registration Page</h1>
 <h2>Login</h2>
 <form method="POST" action="{{ url_for('authPage') }}"/>
     {{ login_form.csrf_token }}
-
-    {{ login_form.email.label }}
-    {{ login_form.email }} <br/>
-    {{ login_form.password.label }}
-    {{ login_form.password }} <br/>
-    {{ login_form.remember.label }}
-    {{ login_form.remember }} <br/>
+    {{ render_field(login_form.email) }}<br/>
+    {{ render_field(login_form.password) }} <br/>
+    {{ render_field(login_form.remember) }} <br/>
     {{ login_form.login_submit }}
 </form>
 
 <h2>Registration</h2>
 <form method="POST" action="{{ url_for('authPage') }}"/>
     {{ register_form.csrf_token }}
-
-    {{ register_form.email.label }}
-    {{ register_form.email }} <br/>
-    {{ register_form.password.label }}
-    {{ register_form.password }} <br/>
+    {{ render_field(register_form.email) }} <br/>
+    {{ render_field(register_form.password) }} <br/>
     {{ register_form.register_submit }}
-
 </form>
 
 {% endblock %}
