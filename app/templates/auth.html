@@ -5,7 +5,7 @@
 
 <h1>Login and Registration Page</h1>
 <h2>Login</h2>
-<form method="POST" action="{{ url_for('authPage') }}"/>
+<form method="POST" action="{{ url_for('auth_page') }}"/>
     {{ login_form.csrf_token }}
     {{ render_field(login_form.email) }}<br/>
     {{ render_field(login_form.password) }} <br/>
@@ -14,7 +14,7 @@
 </form>
 
 <h2>Registration</h2>
-<form method="POST" action="{{ url_for('authPage') }}"/>
+<form method="POST" action="{{ url_for('auth_page') }}"/>
     {{ register_form.csrf_token }}
     {{ render_field(register_form.email) }} <br/>
     {{ render_field(register_form.password) }} <br/>

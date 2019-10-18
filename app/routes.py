@@ -6,16 +6,16 @@ from app.models import User
 from flask_login import login_user, current_user, logout_user
 
 @app.route('/')
-def homePage():
+def home_page():
     return render_template('home.html')
 
-#Set authPage as the default login view for FlaskLogin
-login_manager.login_view = 'authPage'
+#Set auth_page as the default login view for FlaskLogin
+login_manager.login_view = 'auth_page'
 
 @app.route('/auth', methods=['GET', 'POST'])
-def authPage():
+def auth_page():
     if current_user.is_authenticated:
-        return redirect(url_for('roomListPage'))
+        return redirect(url_for('room_list_page'))
 
     login_form = LoginForm()
     register_form = RegisterForm()
@@ -24,14 +24,14 @@ def authPage():
         user = User.check_login(email=login_form.email.data, password=login_form.password.data)
         if user:
             login_user(user, remember=login_form.remember.data)
-            return redirect(url_for('roomListPage'))
+            return redirect(url_for('room_list_page'))
         else:
             login_form.raise_login_error()
     # Handles register form submission
     if register_form.register_submit.data and register_form.validate():
         new_user = User.create(email=register_form.email.data, password=register_form.password.data)
         login_user(new_user)
-        return redirect(url_for('roomListPage'))
+        return redirect(url_for('room_list_page'))
 
     data = {
         'login_form': login_form,
@@ -44,21 +44,21 @@ def authPage():
 def logout():
     if current_user.is_authenticated:
         logout_user()
-    return redirect(url_for('authPage'))
+    return redirect(url_for('auth_page'))
 
 @app.route('/rooms')
-def roomListPage():
+def room_list_page():
     return render_template('roomList.html')
 
 @app.route('/rooms/<id>')
-def roomDetailPage(id):
+def room_detail_page(id):
     return render_template('roomDetail.html')
 
 @app.route('/rooms/<id>/book')
-def reserveRoomPage(id):
+def reserve_room_page(id):
     return render_template('reserve.html')
 
 @app.route('/bookings')
-def bookingsPage():
+def bookings_page():
     return render_template('bookings.html')
 
