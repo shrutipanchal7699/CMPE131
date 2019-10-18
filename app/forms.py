@@ -22,12 +22,12 @@ class Unique(object):
 class LoginForm(FlaskForm):
     email = StringField(
         'email', 
-        validators=[InputRequired(), Email(message='Invalid Email'), Length(max=50)]
+        validators=[InputRequired(),Length(max=50)]
         )
 
     password = PasswordField(
         'password', 
-        validators=[InputRequired(), Length(min=8, max=80)]
+        validators=[InputRequired(), Length(max=80)]
         )
     remember = BooleanField('remember me')
     login_submit = SubmitField('Login')
