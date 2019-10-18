@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, ValidationError
-from wtforms.validators import InputRequired, Email, Length
+from wtforms.validators import InputRequired, Email, Length, EqualTo
 
 from app.models import User
 
@@ -50,7 +50,7 @@ class RegisterForm(FlaskForm):
             InputRequired(),
             Length(min=8, max=80),
             EqualTo('confirm', message='Passwords must match')])
-            
+
     confirm  = PasswordField('Repeat Password')
 
     register_submit = SubmitField('Register')
