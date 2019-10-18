@@ -2,4 +2,8 @@
 
 {% block body %}
 <h1>Room List Page</h1>
+{% if current_user.is_authenticated %}
+  Hi {{ current_user.name }}!
+  <a href="{{ url_for('logout') }}">Click here to log out</a>
+{% endif %}
 {% endblock %}
