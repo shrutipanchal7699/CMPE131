@@ -1,9 +1,9 @@
 from flask import render_template, redirect, url_for
+from flask_login import login_user, current_user, logout_user
 
 from app import app, login_manager
 from app.forms import LoginForm, RegisterForm
 from app.models import User
-from flask_login import login_user, current_user, logout_user
 
 @app.route('/')
 def home_page():

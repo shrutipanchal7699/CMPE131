@@ -1,7 +1,7 @@
-from app import db, login_manager
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 
+from app import db, login_manager
 
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -34,6 +34,7 @@ class User(UserMixin, db.Model):
 
         return None
 
+# Required for FlaskLogin to work
 @login_manager.user_loader
 def load_user(user_id):
     return User.get_by_id(user_id)
