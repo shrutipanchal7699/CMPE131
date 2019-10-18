@@ -32,6 +32,9 @@ class LoginForm(FlaskForm):
     remember = BooleanField('remember me')
     login_submit = SubmitField('Login')
 
+    def raise_login_error(self):
+        self.password.errors = [ValidationError('Invalid login information')]
+
 class RegisterForm(FlaskForm):
     email = StringField(
         'email', 
@@ -43,7 +46,12 @@ class RegisterForm(FlaskForm):
 
     password = PasswordField(
         'password', 
-        validators=[InputRequired(), Length(min=8, max=80)]
-        )
+        validators=[
+            InputRequired(),
+            Length(min=8, max=80),
+            EqualTo('confirm', message='Passwords must match')])
+            
+    confirm  = PasswordField('Repeat Password')
+
     register_submit = SubmitField('Register')
 

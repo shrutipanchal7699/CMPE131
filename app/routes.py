@@ -22,13 +22,13 @@ def authPage():
         if user:
             login_user(user, remember=login_form.remember.data)
             return redirect(url_for('roomListPage'))
+        else:
+            login_form.raise_login_error()
     # Handles register form submission
     if register_form.register_submit.data and register_form.validate():
         new_user = User.create(email=register_form.email.data, password=register_form.password.data)
         login_user(new_user)
         return redirect(url_for('roomListPage'))
-        # If email is not unique
-        register_form.raise_email_not_unique_error()
 
     data = {
         'login_form': login_form,
