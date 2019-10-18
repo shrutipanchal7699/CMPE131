@@ -1,15 +1,27 @@
-from flask import render_template
+from flask import render_template, redirect, url_for
 
 from app import app
-
+from app.forms import LoginForm, RegisterForm
 
 @app.route('/')
 def homePage():
     return render_template('home.html')
 
-@app.route('/auth')
+@app.route('/auth', methods=['GET', 'POST'])
 def authPage():
-    return render_template('auth.html')
+    login_form = LoginForm()
+    register_form = RegisterForm()
+
+    if login_form.validate_on_submit():
+        print(login_form.validate())
+        return login_form.username.data + ' ' + login_form.password.data
+
+    data = {
+        'login_form': login_form,
+        'register_form': register_form
+    }
+
+    return render_template('auth.html', **data)
 
 @app.route('/rooms')
 def roomListPage():

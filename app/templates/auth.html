@@ -2,4 +2,30 @@
 
 {% block body %}
 <h1>Login and Registration Page</h1>
+<h2>Login</h2>
+<form method="POST" action="{{ url_for('authPage') }}"/>
+    {{ login_form.csrf_token }}
+
+    {{ login_form.username.label }}
+    {{ login_form.username }} <br/>
+    {{ login_form.password.label }}
+    {{ login_form.password }} <br/>
+    {{ login_form.remember.label }}
+    {{ login_form.remember }} <br/>
+    <button type="submit">Submit</button>
+</form>
+
+<h2>Registration</h2>
+<form method="POST" action="{{ url_for('authPage') }}"/>
+    {{ register_form.csrf_token }}
+    {{ register_form.email.label }}
+    {{ register_form.email }} <br/>
+    {{ register_form.username.label }}
+    {{ register_form.username }} <br/>
+    {{ register_form.password.label }}
+    {{ register_form.password }} <br/>
+
+    <button type="submit">Submit</button>
+</form>
+
 {% endblock %}
