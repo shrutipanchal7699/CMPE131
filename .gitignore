@@ -4,3 +4,5 @@ venv
 .vscode
 app/app.db
 migrations
+*.pyc
+*.pyo
