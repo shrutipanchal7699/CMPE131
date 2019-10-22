@@ -10,10 +10,7 @@ app.config.from_object(config.Config)
 
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
-
-
-login_manager = LoginManager()
-login_manager.init_app(app)
+login_manager = LoginManager(app)
 
 from app import routes
 from app import admin
