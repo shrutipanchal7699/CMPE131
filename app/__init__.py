@@ -16,3 +16,4 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 
 from app import routes
+from app import admin
