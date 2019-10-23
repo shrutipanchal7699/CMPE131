@@ -3,3 +3,6 @@ app/__pycache__/
 venv
 .vscode
 app/app.db
+migrations
+*.pyc
+*.pyo
