@@ -37,3 +37,11 @@ class User(UserMixin, db.Model):
 @login_manager.user_loader
 def load_user(user_id):
     return User.get_by_id(user_id)
+
+
+class Room(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    room_type = db.Column(db.String(128))
+    room_number = db.Column(db.Integer)
+    max_occupants = db.Column(db.Integer)
+
