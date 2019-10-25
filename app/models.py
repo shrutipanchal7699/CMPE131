@@ -45,3 +45,15 @@ class Room(db.Model):
     room_number = db.Column(db.Integer)
     max_occupants = db.Column(db.Integer)
 
+class Reservation(db.Model):
+     id = db.Column(db.Integer, primary_key=True)
+     check_in_date = db.Column(db.DateTime, nullable = False)
+     check_out_date = db.Column(db.DateTime, nullable = False)
+
+     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable = False)
+     user = db.relationship('User',backref = db.backref('reservations', lazy = True))
+
+     room_id = db.Column(db.Integer, db.ForeignKey('room.id'), nullable = False)
+     room = db.relationship('Room',backref = db.backref('reservations', lazy = True))
+     
+
