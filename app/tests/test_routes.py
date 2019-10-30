@@ -1,29 +1,24 @@
+from flask_testing import TestCase
 from app import create_app
 from app.config import TestConfig
 
-import pytest
+class RouteTest(TestCase):
 
-app = None
-client = None
+    def create_app(self):
+        return create_app(TestConfig)
 
-def setup_module(module):
-    global app
-    global client
-    app = create_app(TestConfig)
-    client = app.test_client()
+    def test_home_page(self):
+        response = self.client.get('/')
+        assert response.status_code == 200
 
-def test_home_page():
-    response = client.get('/')
-    assert response.status_code == 200
+    def test_auth_page(self):
+        response = self.client.get('/auth')
+        assert response.status_code == 200
 
-def test_auth_page():
-    response = client.get('/auth')
-    assert response.status_code == 200
+    def test_room_list_page(self):
+        response = self.client.get('/rooms')
+        assert response.status_code == 200
 
-def test_room_list_page():
-    response = client.get('/rooms')
-    assert response.status_code == 200
-
-def test_room_detail_page():
-    response = client.get('/rooms/2')
-    assert response.status_code == 200
+    def test_room_detail_page(self):
+        response = self.client.get('/rooms/2')
+        assert response.status_code == 200
