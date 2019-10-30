@@ -1,18 +1,25 @@
 from flask import Flask
 
-from app import config
+
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_migrate import Migrate
 
-app = Flask(__name__)
-app.config.from_object(config.Config)
+from app import config
+from app.models import db
+from app.login_manager import login_manager
+from app.admin import admin
 
-db = SQLAlchemy(app)
-migrate = Migrate(app, db)
-login_manager = LoginManager(app)
+def create_app(conf=config.Config):
+    app = Flask(__name__)
+    app.config.from_object(conf)
 
-from app.routes import configure_routes
-configure_routes(app)
+    db.init_app(app)
+    migrate = Migrate(app, db)
+    login_manager.init_app(app)
+    admin.init_app(app)
 
-from app import admin
+    from app.routes import configure_routes
+    configure_routes(app)
+
+    return app

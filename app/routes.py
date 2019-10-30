@@ -1,12 +1,9 @@
 from flask import render_template, redirect, url_for
 from flask_login import login_user, current_user, logout_user
 
-from app import app, login_manager
+from app import login_manager
 from app.forms import LoginForm, RegisterForm
 from app.models import User
-
-#Set auth_page as the default login view for FlaskLogin
-login_manager.login_view = 'auth_page'
 
 def configure_routes(app):
     
