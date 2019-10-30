@@ -1,6 +1,7 @@
 #Hotel Callisto
  
  Features complete:
+  - SignUp
  
 
 To update db:
