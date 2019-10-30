@@ -2,6 +2,7 @@
  
  Features complete:
   - SignUp
+  - Login
  
 
 To update db:
