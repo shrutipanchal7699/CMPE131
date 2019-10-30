@@ -3,9 +3,6 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 from flask_sqlalchemy import SQLAlchemy
 
-from app.login_manager import login_manager
-
-
 db = SQLAlchemy()
 
 class User(UserMixin, db.Model):
@@ -37,12 +34,6 @@ class User(UserMixin, db.Model):
                 return user
 
         return None
-
-# Required for FlaskLogin to work
-@login_manager.user_loader
-def load_user(user_id):
-    return User.get_by_id(user_id)
-
 
 class Room(db.Model):
     id = db.Column(db.Integer, primary_key=True)
