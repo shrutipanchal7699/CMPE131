@@ -1,6 +1,3 @@
-##Hotel Callisto
-###A hotel management app
-
 ####I. How to run the app:
 
 **1. Prerequisites:** 
