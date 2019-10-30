@@ -1,4 +1,7 @@
 #Hotel Callisto
+ 
+ Features complete:
+ 
 
 To update db:
 
