@@ -3,6 +3,8 @@
  Features complete:
   - SignUp
   - Login
+  
+  - Reservation
  
 
 To update db:
