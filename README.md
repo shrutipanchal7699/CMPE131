@@ -3,7 +3,7 @@
  Features complete:
   - SignUp
   - Login
-  
+  - Room Selection
   - Reservation
  
 
