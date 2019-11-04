@@ -39,21 +39,25 @@ def configure_routes(app):
         }
 
         return render_template('auth.html', **data)
-
+    
+    #User logout 
     @app.route('/logout')
     def logout():
         if current_user.is_authenticated:
             logout_user()
         return redirect(url_for('auth_page'))
 
+    #displays list of rooms to the user
     @app.route('/rooms')
     def room_list_page():
         return render_template('roomList.html')
 
+    # displays the details of different rooms
     @app.route('/rooms/<id>')
     def room_detail_page(id):
         return render_template('roomDetail.html')
 
+    #for user reservation
     @app.route('/rooms/<id>/book')
     def reserve_room_page(id):
         return render_template('reserve.html')
