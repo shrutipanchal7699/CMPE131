@@ -57,7 +57,7 @@ def configure_routes(app):
     @app.route('/rooms/<id>/book')
     def reserve_room_page(id):
         return render_template('reserve.html')
-
+    #Bookings Page
     @app.route('/bookings')
     def bookings_page():
         return render_template('bookings.html')
