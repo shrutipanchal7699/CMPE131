@@ -19,7 +19,7 @@ def configure_routes(app):
 
         login_form = LoginForm()
         register_form = RegisterForm()
-        # Handles login form submission
+        # Handles login form submissions
         if login_form.login_submit.data and login_form.validate():
             user = User.check_login(email=login_form.email.data, password=login_form.password.data)
             if user:
@@ -27,7 +27,7 @@ def configure_routes(app):
                 return redirect(url_for('room_list_page'))
             else:
                 login_form.raise_login_error()
-        # Handles register form submission
+        # Handles register form submissions
         if register_form.register_submit.data and register_form.validate():
             new_user = User.create(email=register_form.email.data, password=register_form.password.data)
             login_user(new_user)
