@@ -3,7 +3,9 @@ from flask_login import login_user, current_user, logout_user
     
 from app import login_manager
 from app.forms import LoginForm, RegisterForm
-from app.models import User
+from app.models import User, Room
+
+from datetime import timedelta, date
 
 def configure_routes(app):
     
@@ -52,6 +54,11 @@ def configure_routes(app):
     #displays list of rooms to the user
     @app.route('/rooms')
     def room_list_page():
+        query = {
+            'check_in_date': date.today() + timedelta(days = 1),
+            'check_out_date': date.today() + timedelta(days = 6)
+        }
+        rooms = Room.fetch_room_to_query(query)
         return render_template('roomList.html')
 
     # displays the details of different rooms
