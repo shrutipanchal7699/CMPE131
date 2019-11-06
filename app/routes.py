@@ -1,9 +1,9 @@
 from flask import render_template, redirect, url_for
-from flask_login import login_user, current_user, logout_user
+from flask_login import login_user, current_user, logout_user, login_required
     
 from app import login_manager
 from app.forms import LoginForm, RegisterForm
-from app.models import User, Room
+from app.models import User, Room, Reservation
 
 from datetime import timedelta, date
 
@@ -59,7 +59,10 @@ def configure_routes(app):
             'check_out_date': date.today() + timedelta(days = 6)
         }
         rooms = Room.fetch_room_to_query(query)
-        return render_template('roomList.html')
+        data = {
+            'rooms': rooms
+        }
+        return render_template('roomList.html', data)
 
     # displays the details of different rooms
     @app.route('/rooms/<id>')
@@ -73,8 +76,13 @@ def configure_routes(app):
     
     #Bookings Page
     @app.route('/bookings')
+    @login_required
     def bookings_page():
-        return render_template('bookings.html')
+        reservations = Reservation.fetch_users_reservation(current_user.id)
+        data = {
+            'reservations' : reservations
+        }
+        return render_template('bookings.html', data)
     
     #CancelReservation Page
    #@app.route('/cancellation')

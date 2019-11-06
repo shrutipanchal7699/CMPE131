@@ -109,6 +109,11 @@ class Reservation(db.Model):
         )
         return reservations.all()
 
+    @classmethod
+    def fetch_users_reservation(cls, user_id):
+        reservations = cls.query.filter(Reservation.user_id == user_id)
+        return reservations
+
 
 #class DeleteReservation(db.Model):
 #models.User.query.delete()
