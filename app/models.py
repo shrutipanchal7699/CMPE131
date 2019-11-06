@@ -34,13 +34,14 @@ class User(UserMixin, db.Model):
                 return user
 
         return None
-
+#class for Room 
 class Room(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     room_type = db.Column(db.String(128))
     room_number = db.Column(db.Integer)
     max_occupants = db.Column(db.Integer)
 
+#reservation Class 
 class Reservation(db.Model):
      id = db.Column(db.Integer, primary_key=True)
      check_in_date = db.Column(db.DateTime, nullable = False)
@@ -51,6 +52,7 @@ class Reservation(db.Model):
 
      room_id = db.Column(db.Integer, db.ForeignKey('room.id'), nullable = False)
      room = db.relationship('Room',backref = db.backref('reservations', lazy = True))
+    
     
 #class DeleteReservation(db.Model):
 #models.User.query.delete()
