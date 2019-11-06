@@ -1,6 +1,6 @@
 from flask import render_template, redirect, url_for
 from flask_login import login_user, current_user, logout_user
-
+    
 from app import login_manager
 from app.forms import LoginForm, RegisterForm
 from app.models import User
@@ -19,6 +19,7 @@ def configure_routes(app):
 
         login_form = LoginForm()
         register_form = RegisterForm()
+        
         # Handles login form submissions
         if login_form.login_submit.data and login_form.validate():
             user = User.check_login(email=login_form.email.data, password=login_form.password.data)
@@ -27,6 +28,7 @@ def configure_routes(app):
                 return redirect(url_for('room_list_page'))
             else:
                 login_form.raise_login_error()
+                
         # Handles register form submissions
         if register_form.register_submit.data and register_form.validate():
             new_user = User.create(email=register_form.email.data, password=register_form.password.data)
@@ -61,6 +63,7 @@ def configure_routes(app):
     @app.route('/rooms/<id>/book')
     def reserve_room_page(id):
         return render_template('reserve.html')
+    
     #Bookings Page
     @app.route('/bookings')
     def bookings_page():
