@@ -73,3 +73,8 @@ def configure_routes(app):
    #@app.route('/cancellation')
    #def cancellation_page():
         #return render_template('cancelReservation.html')
+        
+    #ViewReservations Page
+   #@app.route('/view')
+   #def viewReservation_page():
+        #return render_template('viewReservation.html')
