@@ -2,6 +2,7 @@ from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import and_, or_
 
 db = SQLAlchemy()
 
@@ -41,19 +42,44 @@ class Room(db.Model):
     room_number = db.Column(db.Integer)
     max_occupants = db.Column(db.Integer)
 
+    @classmethod
+    def fetch_room_to_query(query):
+        pass
+
 #reservation Class 
 class Reservation(db.Model):
-     id = db.Column(db.Integer, primary_key=True)
-     check_in_date = db.Column(db.DateTime, nullable = False)
-     check_out_date = db.Column(db.DateTime, nullable = False)
+    id = db.Column(db.Integer, primary_key=True)
+    check_in_date = db.Column(db.DateTime, nullable = False)
+    check_out_date = db.Column(db.DateTime, nullable = False)
 
-     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable = False)
-     user = db.relationship('User',backref = db.backref('reservations', lazy = True))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable = False)
+    user = db.relationship('User',backref = db.backref('reservations', lazy = True))
 
-     room_id = db.Column(db.Integer, db.ForeignKey('room.id'), nullable = False)
-     room = db.relationship('Room',backref = db.backref('reservations', lazy = True))
-    
-    
+    room_id = db.Column(db.Integer, db.ForeignKey('room.id'), nullable = False)
+    room = db.relationship('Room',backref = db.backref('reservations', lazy = True))
+
+    @classmethod
+    def find_conflicting_reservations(cls, start_date, end_date):
+        """ Return all reservations that fits the conditions:
+            - Start date and end date are NOT both before the target start date
+            - Start date and end date are NOT both after the target end date
+        """
+        reservations = cls.query.filter(
+            and_(
+                or_(
+                    Reservation.check_in_date >= start_date,
+                    Reservation.check_out_date >= start_date
+                ),
+                or_(
+                    Reservation.check_in_date <= end_date,
+                    Reservation.check_out_date <= end_date
+                )
+            )
+        )
+
+        return reservations
+
+
 #class DeleteReservation(db.Model):
 #models.User.query.delete()
 
