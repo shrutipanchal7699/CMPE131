@@ -2,7 +2,7 @@ from flask import render_template, redirect, url_for
 from flask_login import login_user, current_user, logout_user
     
 from app import login_manager
-from app.forms import LoginForm, RegisterForm
+from app.forms import LoginForm, RegisterForm, QueryForm
 from app.models import User, Room
 
 from datetime import timedelta, date
@@ -59,7 +59,8 @@ def configure_routes(app):
             'check_out_date': date.today() + timedelta(days = 6)
         }
         rooms = Room.fetch_room_to_query(query)
-        return render_template('roomList.html')
+        form = QueryForm()
+        return render_template('roomList.html', form = form)
 
     # displays the details of different rooms
     @app.route('/rooms/<id>')
