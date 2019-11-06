@@ -54,9 +54,9 @@ class Room(db.Model):
         """
         #Construct query
         rooms = cls.query
-        if 'rooms_type' in query:
+        if query['room_type']:
             rooms = rooms.filter(Room.room_type == query['room_type'])
-        if 'num_occupants' in query:
+        if query['num_occupants']:
             rooms = rooms.filter(Room.max_occupants >= query['num_occupants'])
         #Return a list
         rooms = rooms.all()
@@ -78,8 +78,8 @@ class Room(db.Model):
 #reservation Class 
 class Reservation(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    check_in_date = db.Column(db.DateTime, nullable = False)
-    check_out_date = db.Column(db.DateTime, nullable = False)
+    check_in_date = db.Column(db.Date, nullable = False)
+    check_out_date = db.Column(db.Date, nullable = False)
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable = False)
     user = db.relationship('User',backref = db.backref('reservations', lazy = True))
@@ -108,6 +108,11 @@ class Reservation(db.Model):
             )
         )
         return reservations.all()
+
+    @classmethod
+    def fetch_users_reservation(cls, user_id):
+        reservations = cls.query.filter(Reservation.user_id == user_id)
+        return reservations
 
 
 #class DeleteReservation(db.Model):

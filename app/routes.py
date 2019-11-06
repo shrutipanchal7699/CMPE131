@@ -1,5 +1,5 @@
 from flask import render_template, redirect, url_for
-from flask_login import login_user, current_user, logout_user
+from flask_login import login_user, current_user, logout_user, login_required
     
 from app import login_manager
 from app.forms import LoginForm, RegisterForm, QueryForm
@@ -52,15 +52,22 @@ def configure_routes(app):
         return redirect(url_for('auth_page'))
 
     #displays list of rooms to the user
-    @app.route('/rooms')
+    @app.route('/rooms', methods=['GET', 'POST'])
     def room_list_page():
         query = {
             'check_in_date': date.today() + timedelta(days = 1),
             'check_out_date': date.today() + timedelta(days = 6)
         }
-        rooms = Room.fetch_room_to_query(query)
+        rooms = []
         form = QueryForm()
-        return render_template('roomList.html', form = form)
+        if form.validate_on_submit():
+            rooms = Room.fetch_room_to_query({
+                'check_in_date': form.check_in_date.data,
+                'check_out_date': form.check_out_date.data,
+                'room_type': form.room_type.data,
+                'num_occupants': form.number_of_occupants.data
+            })
+        return render_template('roomList.html', form=form, rooms=rooms)
 
     # displays the details of different rooms
     @app.route('/rooms/<id>')
@@ -74,8 +81,13 @@ def configure_routes(app):
     
     #Bookings Page
     @app.route('/bookings')
+    @login_required
     def bookings_page():
-        return render_template('bookings.html')
+        reservations = Reservation.fetch_users_reservation(current_user.id)
+        data = {
+            'reservations' : reservations
+        }
+        return render_template('bookings.html', data)
     
     #CancelReservation Page
    #@app.route('/cancellation')

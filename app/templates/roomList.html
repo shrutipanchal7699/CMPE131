@@ -9,7 +9,7 @@
   <a href="{{ url_for('logout') }}">Click here to log out</a>
 {% endif %}
 
-<form method="POST" action="{{ url_for('auth_page') }}"/>
+<form method="POST" action="{{ url_for('room_list_page') }}"/>
     {{ form.csrf_token }}
     {{ render_field(form.check_in_date) }}<br/>
     {{ render_field(form.check_out_date) }} <br/>
@@ -17,5 +17,11 @@
     {{ render_field(form.number_of_occupants) }} <br/>
     <input type="submit" value="Submit" />
 </form>
+
+{% for room in rooms %} 
+<p>
+  {{room.id}} 
+</p>
+{% endfor %}
 
 {% endblock %}
