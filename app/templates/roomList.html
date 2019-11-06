@@ -2,21 +2,28 @@
 
 {% block body %}
 {% from "_formhelpers.html" import render_field %}
-
-<h1>Room List Page</h1>
 {% if current_user.is_authenticated %}
   Hi {{ current_user.name }}!
   <a href="{{ url_for('logout') }}">Click here to log out</a>
 {% endif %}
 
-<form method="POST" action="{{ url_for('room_list_page') }}"/>
-    {{ form.csrf_token }}
-    {{ render_field(form.check_in_date) }}<br/>
-    {{ render_field(form.check_out_date) }} <br/>
-    {{ render_field(form.room_type) }} <br/>
-    {{ render_field(form.number_of_occupants) }} <br/>
-    <input type="submit" value="Submit" />
-</form>
+<div id="home-main-div" class="container-fluid">
+  <!-- <a href="{{ url_for('auth_page') }}">Login or Register</a>
+    <a href="{{ url_for('room_list_page') }}">View Rooms</a> -->
+  <div class="calendar-container">
+    <form method="POST" action="{{ url_for('room_list_page') }}" id="room-search-form">
+      <div class="room-search-param-container">
+        <div id="calendar">
+        </div>
+      </div>
+      <div class="room-search-param-container">
+        {{ form.number_of_occupants(class_="room-search-params") }}
+        {{ form.room_type(class_="room-search-params") }}
+        <button type="submit" value="Submit" class="room-search-params">Submit</button>
+      </div>
+    </form>
+  </div> 
+</div>
 
 {% for room in rooms %} 
 <p>
