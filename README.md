@@ -1,4 +1,4 @@
-####I. How to run the app:
+#### I. How to run the app:
 
 **1. Prerequisites:** 
 Python3, pip and Virtualenv (optional)
@@ -29,9 +29,11 @@ On Windows:
 
 On Mac/Linux:
 >$ export FLASK_APP="HotelApp.py"
+>$ export FLASK_DEBUG=1 (optional when debugging)
 
 On Windows:
 >$ set FLASK_APP="HotelApp.py"
+>$ set FLASK_DEBUG=1 (optional when debugging)
 
 **6. Run the app:**
 >$ flask run

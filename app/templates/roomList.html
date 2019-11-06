@@ -1,9 +1,21 @@
 {% extends 'base.html' %}
 
 {% block body %}
+{% from "_formhelpers.html" import render_field %}
+
 <h1>Room List Page</h1>
 {% if current_user.is_authenticated %}
   Hi {{ current_user.name }}!
   <a href="{{ url_for('logout') }}">Click here to log out</a>
 {% endif %}
+
+<form method="POST" action="{{ url_for('auth_page') }}"/>
+    {{ form.csrf_token }}
+    {{ render_field(form.check_in_date) }}<br/>
+    {{ render_field(form.check_out_date) }} <br/>
+    {{ render_field(form.room_type) }} <br/>
+    {{ render_field(form.number_of_occupants) }} <br/>
+    <input type="submit" value="Submit" />
+</form>
+
 {% endblock %}

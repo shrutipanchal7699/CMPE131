@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, ValidationError
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, ValidationError, DateField, IntegerField
 from wtforms.validators import InputRequired, Email, Length, EqualTo
 
 from app.models import User
@@ -55,3 +55,25 @@ class RegisterForm(FlaskForm):
 
     register_submit = SubmitField('Register')
 
+class QueryForm(FlaskForm):
+    check_in_date = DateField(
+        'Check In Date',
+        validators = [
+            InputRequired()
+            ]
+    )
+
+    check_out_date = DateField(
+        'Check Out Date',
+        validators = [
+            InputRequired()
+            ]
+    )
+
+    room_type = StringField(
+        'Room Type'
+    )
+
+    number_of_occupants = IntegerField(
+        'Number of Occupants'
+    )
