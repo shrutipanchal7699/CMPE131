@@ -1,5 +1,15 @@
 {% extends 'base.html' %}
 
 {% block body %}
+{% from "_formhelpers.html" import render_field %}
+
 <h1>Reserve Room Page</h1>
+<form method="POST" action="{{ url_for('room_list_page') }}"/>
+    {{ form.csrf_token }}
+    {{ render_field(form.check_in_date) }}<br/>
+    {{ render_field(form.check_out_date) }} <br/>
+    {{ render_field(form.room_type) }} <br/>
+    {{ render_field(form.number_of_occupants) }} <br/>
+    <input type="submit" value="Confirm Reservation" />
+</form>
 {% endblock %}

@@ -104,3 +104,58 @@ class QueryForm(FlaskForm):
     
     def raise_start_after_end_error(self):
         self.check_in_date.errors = [ValidationError("Start date can't come after end date")]
+
+
+class MakeReservationForm(FlaskForm):
+    check_in_date = DateField(
+        'Check In Date',
+        validators = [
+            InputRequired()
+            ]
+    )
+
+    check_out_date = DateField(
+        'Check Out Date',
+        validators = [
+            InputRequired()
+            ]
+    )
+
+    room_type = SelectField('Room Type', choices=[
+        ('reg','Regular'),
+        ('del','Deluxe'),
+        ('sdel','Super Deluxe')],
+         validators = [
+            InputRequired()
+            ]
+
+    )
+
+    number_of_occupants = IntegerField(
+        'Number of Occupants',
+         validators = [
+            InputRequired()
+            ]
+    )
+
+    def validate(self):
+        #Both dates are not in the past
+        res = super(QueryForm, self).validate()
+        if self.check_in_date.data < date.today():
+            self.raise_date_in_past_error(self.check_in_date)
+            return False
+        if self.check_out_date.data < date.today():
+            self.raise_date_in_past_error(self.check_out_date)
+            return False
+        #Start date has to be earlier than end date
+        if self.check_in_date.data > self.check_out_date.data:
+            self.raise_start_after_end_error()
+            return False
+
+        return res and True
+
+    def raise_date_in_past_error(self, field):
+        field.errors = [ValidationError("Date can't be in the past")]
+    
+    def raise_start_after_end_error(self):
+        self.check_in_date.errors = [ValidationError("Start date can't come after end date")]

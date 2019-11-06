@@ -2,7 +2,7 @@ from flask import render_template, redirect, url_for
 from flask_login import login_user, current_user, logout_user, login_required
     
 from app import login_manager
-from app.forms import LoginForm, RegisterForm, QueryForm
+from app.forms import LoginForm, RegisterForm, QueryForm, MakeReservationForm
 from app.models import User, Room
 
 from datetime import timedelta, date
@@ -77,7 +77,8 @@ def configure_routes(app):
     #for user reservation
     @app.route('/rooms/<id>/book')
     def reserve_room_page(id):
-        return render_template('reserve.html')
+        form = MakeReservationForm()
+        return render_template('reserve.html', form = form)
     
     #Bookings Page
     @app.route('/bookings')
