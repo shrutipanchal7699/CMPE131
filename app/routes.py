@@ -52,15 +52,22 @@ def configure_routes(app):
         return redirect(url_for('auth_page'))
 
     #displays list of rooms to the user
-    @app.route('/rooms')
+    @app.route('/rooms', methods=['GET', 'POST'])
     def room_list_page():
         query = {
             'check_in_date': date.today() + timedelta(days = 1),
             'check_out_date': date.today() + timedelta(days = 6)
         }
-        rooms = Room.fetch_room_to_query(query)
+        rooms = []
         form = QueryForm()
-        return render_template('roomList.html', form = form)
+        if form.validate_on_submit():
+            rooms = Room.fetch_room_to_query({
+                'check_in_date': form.check_in_date.data,
+                'check_out_date': form.check_out_date.data,
+                'room_type': form.room_type.data,
+                'num_occupants': form.number_of_occupants.data
+            })
+        return render_template('roomList.html', form=form, rooms=rooms)
 
     # displays the details of different rooms
     @app.route('/rooms/<id>')
