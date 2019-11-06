@@ -51,5 +51,9 @@ class Reservation(db.Model):
 
      room_id = db.Column(db.Integer, db.ForeignKey('room.id'), nullable = False)
      room = db.relationship('Room',backref = db.backref('reservations', lazy = True))
-     
+    
+#class DeleteReservation(db.Model):
+#models.User.query.delete()
+
+
 
