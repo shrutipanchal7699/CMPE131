@@ -59,7 +59,6 @@ def configure_routes(app):
             'check_out_date': date.today() + timedelta(days = 6)
         }
         rooms = Room.fetch_room_to_query(query)
-        print(list(rooms))
         return render_template('roomList.html')
 
     # displays the details of different rooms
