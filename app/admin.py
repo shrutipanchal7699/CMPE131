@@ -7,3 +7,6 @@ admin = Admin(name='hotelApp')
 admin.add_view(ModelView(User, db.session))
 admin.add_view(ModelView(Room, db.session))
 admin.add_view(ModelView(Reservation, db.session))
+
+#admin.add_view(ModelView(DeleteReservation,db.session))
+#admin.add_view(ModelView(ViewReservation,db.session))
