@@ -11,7 +11,7 @@ def configure_routes(app):
     
     @app.route('/')
     def home_page():
-        return render_template('home.html')
+        return render_template('Homepage.html')
 
 
     @app.route('/auth', methods=['GET', 'POST'])
