@@ -3,7 +3,7 @@ from flask_login import login_user, current_user, logout_user, login_required
     
 from app import login_manager
 from app.forms import LoginForm, RegisterForm, QueryForm, MakeReservationForm
-from app.models import User, Room
+from app.models import User, Room, Reservation
 
 from datetime import timedelta, date
 
@@ -57,6 +57,7 @@ def configure_routes(app):
             logout_user()
         return redirect(url_for('auth_page'))
 
+
     #displays list of rooms to the user
     @app.route('/rooms', methods=['GET', 'POST'])
     def room_list_page():
@@ -94,7 +95,7 @@ def configure_routes(app):
         data = {
             'reservations' : reservations
         }
-        return render_template('bookings.html', data)
+        return render_template('bookings.html', **data)
     
     #CancelReservation Page
    #@app.route('/cancellation')
