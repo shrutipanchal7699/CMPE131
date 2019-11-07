@@ -21,8 +21,10 @@ class Unique(object):
         if check:
             raise ValidationError(self.message)
 
-
 class LoginForm(FlaskForm):
+
+    valid_user = None
+
     email = StringField(
         'email', 
         validators=[InputRequired(),Length(max=50)]
@@ -30,13 +32,24 @@ class LoginForm(FlaskForm):
 
     password = PasswordField(
         'password', 
-        validators=[InputRequired(), Length(max=80)]
+        validators=[
+            InputRequired(),
+            Length(max=80),
+            ]
         )
     remember = BooleanField('remember me')
-    login_submit = SubmitField('Login')
 
-    def raise_login_error(self):
-        self.password.errors = [ValidationError('Invalid login information')]
+    def validate(self):
+        if not super(LoginForm, self).validate():
+            return False
+        
+        user = User.check_login(email=self.email.data, password=self.password.data)
+        if user:
+            self.valid_user = user
+            return True
+        else:
+            self.password.errors = [ValidationError('Invalid login information')]
+            return False
 
 class RegisterForm(FlaskForm):
     email = StringField(
@@ -55,8 +68,6 @@ class RegisterForm(FlaskForm):
             EqualTo('confirm', message='Passwords must match')])
 
     confirm  = PasswordField('Repeat Password')
-
-    register_submit = SubmitField('Register')
 
 class QueryForm(FlaskForm):
     check_in_date = DateField(

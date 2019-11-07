@@ -1,29 +1,31 @@
-
 {% extends 'base.html' %}
 
 {% block body %}
 
-{% from "_formhelpers.html" import render_field %}
+{% from "_formhelpers.html" import render_field, render_error %}
 
 <h1>Login and Registration Page</h1>
 <h2>Login</h2>
 
-<form method="POST" action="{{ url_for('auth_page') }}"/>
-    {{ login_form.csrf_token }}
-    {{ render_field(login_form.email) }}<br/>
-    {{ render_field(login_form.password) }} <br/>
-    {{ render_field(login_form.remember) }} <br/>
-    {{ login_form.login_submit }}
+<form method="POST" action="{{ url_for('login') }}" />
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+    <input type="email" name="email" placeholder="email" /> <br />
+    <input type="password" name="password" placeholder="password" /> <br />
+    {{ render_error("login_password") }}  <br />
+    Remember me: <input type="checkbox" name="remember" /> <br />
+    <input type="submit" value="Submit" /> <br />
 </form>
 
 <h2>Registration</h2>
 
-<form method="POST" action="{{ url_for('auth_page') }}"/>
-    {{ register_form.csrf_token }}
-    {{ render_field(register_form.email) }} <br/>
-    {{ render_field(register_form.password) }} <br/>
-    {{ render_field(register_form.confirm) }} <br/>
-    {{ register_form.register_submit }}
+<form method="POST" action="{{ url_for('register') }}" />
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+    <input type="email" name="email" placeholder="email" /> <br />
+    {{ render_error("register_email") }}  <br />
+    <input type="password" name="password" placeholder="password" /> <br />
+    {{ render_error("register_password") }}  <br />
+    <input type="password" name="confirm" placeholder="Confirm password" /> <br />
+    <input type="submit" value="Submit" /> <br />
 </form>
 
 {% endblock %}
