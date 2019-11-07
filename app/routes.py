@@ -98,9 +98,14 @@ def configure_routes(app):
         return render_template('bookings.html', **data)
     
     #CancelReservation Page
-   #@app.route('/cancellation')
-   #def cancellation_page():
-        #return render_template('cancelReservation.html')
+    @app.route('/bookings/<res_id>/cancel')
+    @login_required
+    def cancel_reservation(res_id):
+        """
+        res_id: id of reservation the client wants to cancel
+        """
+        current_user.delete_reservation(res_id)
+        return redirect(url_for('bookings_page'))
         
     #ViewReservations Page
    #@app.route('/view')
