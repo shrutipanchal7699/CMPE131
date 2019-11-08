@@ -35,6 +35,16 @@ class User(UserMixin, db.Model):
                 return user
 
         return None
+
+    def delete_reservation(self, res_id):
+        target =  Reservation.query.get(int(res_id))
+        if target and target.user_id == self.id:
+            db.session.delete(target)
+            db.session.commit()
+            return True
+        return False
+
+    
 #class for Room 
 class Room(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -113,7 +123,7 @@ class Reservation(db.Model):
     def fetch_users_reservation(cls, user_id):
         reservations = cls.query.filter(Reservation.user_id == user_id)
         return reservations
-
+    
 
 #class DeleteReservation(db.Model):
 #models.User.query.delete()
