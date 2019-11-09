@@ -21,8 +21,10 @@ class Unique(object):
         if check:
             raise ValidationError(self.message)
 
-
 class LoginForm(FlaskForm):
+
+    valid_user = None
+
     email = StringField(
         'email', 
         validators=[InputRequired(),Length(max=50)]
@@ -30,13 +32,24 @@ class LoginForm(FlaskForm):
 
     password = PasswordField(
         'password', 
-        validators=[InputRequired(), Length(max=80)]
+        validators=[
+            InputRequired(),
+            Length(max=80),
+            ]
         )
     remember = BooleanField('remember me')
-    login_submit = SubmitField('Login')
 
-    def raise_login_error(self):
-        self.password.errors = [ValidationError('Invalid login information')]
+    def validate(self):
+        if not super(LoginForm, self).validate():
+            return False
+        
+        user = User.check_login(email=self.email.data, password=self.password.data)
+        if user:
+            self.valid_user = user
+            return True
+        else:
+            self.password.errors = [ValidationError('Invalid login information')]
+            return False
 
 class RegisterForm(FlaskForm):
     email = StringField(
@@ -55,8 +68,6 @@ class RegisterForm(FlaskForm):
             EqualTo('confirm', message='Passwords must match')])
 
     confirm  = PasswordField('Repeat Password')
-
-    register_submit = SubmitField('Register')
 
 class QueryForm(FlaskForm):
     check_in_date = DateField(
@@ -87,6 +98,61 @@ class QueryForm(FlaskForm):
         ('5','5'),
         ('6','6'),
     ])
+
+    def validate(self):
+        #Both dates are not in the past
+        res = super(QueryForm, self).validate()
+        if self.check_in_date.data < date.today():
+            self.raise_date_in_past_error(self.check_in_date)
+            return False
+        if self.check_out_date.data < date.today():
+            self.raise_date_in_past_error(self.check_out_date)
+            return False
+        #Start date has to be earlier than end date
+        if self.check_in_date.data > self.check_out_date.data:
+            self.raise_start_after_end_error()
+            return False
+
+        return res and True
+
+    def raise_date_in_past_error(self, field):
+        field.errors = [ValidationError("Date can't be in the past")]
+    
+    def raise_start_after_end_error(self):
+        self.check_in_date.errors = [ValidationError("Start date can't come after end date")]
+
+
+class MakeReservationForm(FlaskForm):
+    check_in_date = DateField(
+        'Check In Date',
+        validators = [
+            InputRequired()
+            ]
+    )
+
+    check_out_date = DateField(
+        'Check Out Date',
+        validators = [
+            InputRequired()
+            ]
+    )
+
+    room_type = SelectField('Room Type', choices=[
+        ('reg','Regular'),
+        ('del','Deluxe'),
+        ('sdel','Super Deluxe')],
+         validators = [
+            InputRequired()
+            ]
+
+    )
+
+    number_of_occupants = IntegerField(
+        'Number of Occupants',
+         validators = [
+            InputRequired()
+            ]
+    )
 
     def validate(self):
         #Both dates are not in the past

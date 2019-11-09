@@ -2,4 +2,10 @@
 
 {% block body %}
 <h1>List of Bookings Page</h1>
+{% for reservation in reservations %}
+<p>
+    {{ reservation.id }} - {{ reservation.check_in_date }} - {{ reservation.check_out_date }}
+    <a href="{{ url_for('cancel_reservation', res_id=reservation.id) }}"> Cancel</a>
+</p>
+{% endfor %}
 {% endblock %}
