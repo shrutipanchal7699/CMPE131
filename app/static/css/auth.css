@@ -1,0 +1,48 @@
+#auth-main-div {
+    background-image: url(../images/glassbuilding.jpg);
+    background-position: center;
+    background-size: contain;
+}
+
+#login-signup-switch-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+#login-signup-switch {
+    width: 30em;
+    -webkit-box-shadow: 15px 16px 15px -15px rgba(35,83,127,0.6); 
+    box-shadow: 15px 16px 15px -15px rgba(35,83,127,0.6);
+}
+
+.accordion-card-label-div {
+    padding: 1em;
+}
+
+#login-collapse {
+    border-top: solid rgb(228, 228, 228) 1px;
+}
+
+#signup-collapse {
+    border-top: solid rgb(228, 228, 228) 1px;
+}
+
+.login-signup-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.login-form-input {
+    display: block;
+    width: calc(100% - 2em);
+    padding: 0.5em;
+    margin: 1em;
+    border-radius: 4px;
+    border: 1px solid rgb(228, 228, 228);
+}
+
+.login-form-input-invalid, input:invalid {
+    border: 3px solid rgb(255, 106, 106);
+}

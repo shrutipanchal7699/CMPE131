@@ -4,28 +4,45 @@
 
 {% from "_formhelpers.html" import render_field, render_error %}
 
-<h1>Login and Registration Page</h1>
-<h2>Login</h2>
-
-<form method="POST" action="{{ url_for('login') }}" />
-    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-    <input type="email" name="email" placeholder="email" /> <br />
-    <input type="password" name="password" placeholder="password" /> <br />
-    {{ render_error("login_password") }}  <br />
-    Remember me: <input type="checkbox" name="remember" /> <br />
-    <input type="submit" value="Submit" /> <br />
-</form>
-
-<h2>Registration</h2>
-
-<form method="POST" action="{{ url_for('register') }}" />
-    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-    <input type="email" name="email" placeholder="email" /> <br />
-    {{ render_error("register_email") }}  <br />
-    <input type="password" name="password" placeholder="password" /> <br />
-    {{ render_error("register_password") }}  <br />
-    <input type="password" name="confirm" placeholder="Confirm password" /> <br />
-    <input type="submit" value="Submit" /> <br />
-</form>
+<div id="auth-main-div" class="flex-viewport-div">
+    <div id="login-signup-switch-container">
+        <div class="accordion" id="login-signup-switch">
+            <div class="card">
+                <div data-toggle="collapse" data-target="#login-collapse" aria-expanded="true" aria-controls="login-collapse" class="accordion-card-label-div">
+                    Login
+                </div>
+                <div id="login-collapse" class="collapse" aria-labelledby="headingOne" data-parent="#login-signup-switch">
+                    <div class="card-body">
+                        <form method="POST" action="{{ url_for('auth_page') }}" class="login-signup-form">
+                            <input type="text" class="login-form-input login-form-input-invalid" placeholder="Email"/>
+                            <input type="text" class="login-form-input" placeholder="Password"/>
+                            <input type="button" class="login-form-input" value="Login"/>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div data-toggle="collapse" data-target="#signup-collapse" aria-expanded="false" aria-controls="signup-collapse" class="accordion-card-label-div">
+                    Signup
+                </div>
+                <div id="signup-collapse" class="collapse" aria-labelledby="headingTwo" data-parent="#login-signup-switch">
+                <div class="card-body">
+                        <form method="POST" action="{{ url_for('auth_page') }}" class="login-signup-form">
+                            <input type="text" class="login-form-input" placeholder="Email"/>
+                            <input type="text" class="login-form-input" placeholder="Password"/>
+                            <input type="text" class="login-form-input" placeholder="Repeat Password"/>
+                            <div style="padding-left: 1.75em; font-size: 0.75em;">
+                                <p>At least 6 characters</p>
+                                <p>At least 1 special character</p>
+                                <p>At least 1 number</p>
+                            </div>
+                            <input type="button" class="login-form-input" value="Signup"/>
+                        </form>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 {% endblock %}
