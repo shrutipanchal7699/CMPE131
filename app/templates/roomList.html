@@ -13,50 +13,50 @@
 </script>
 {% from "_formhelpers.html" import render_field %}
 {% if current_user.is_authenticated %}
-  Hi {{ current_user.name }}!
-  <a href="{{ url_for('logout') }}">Click here to log out</a>
+    Hi {{ current_user.name }}!
+    <a href="{{ url_for('logout') }}">Click here to log out</a>
 {% endif %}
 
 <div id="home-main-div">
-  <div id="home-viewport1" class="flex-viewport-div">
-      <div id="account-button" class="btn-group dropleft">
-          <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            O
-          </button>
-          <div class="dropdown-menu">
-            <a class="dropdown-item" href="{{ url_for('auth_page') }}">Login or Register</a>
-          </div>
+    <div id="home-viewport1" class="flex-viewport-div">
+        <div id="account-button" class="btn-group dropleft">
+            <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                O
+            </button>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="{{ url_for('auth_page') }}">Login or Register</a>
+            </div>
         </div>
-    <div id="room-search-form-container">
-      <h1 id="hotel-callisto-title">Hotel Callisto</h1>
-      <div class="calendar-container">
-          <form id="room-search-form">
-              <div id="room-search-param-container">
-                      <input type="text" name="daterange" value="01/01/2018 - 01/15/2018" class="room-search-params"/>
-                      <select name="roomtype" class="room-search-params" placeholder="Guests">
-                              <option value="1">1</option>
-                              <option value="2">2</option>
-                              <option value="3">3</option>
-                              <option value="4">4</option>
-                              <option value="5">5</option>
-                              <option value="6">6</option>
-                      </select>
-                      <select name="roomtype" class="room-search-params">
-                              <option value="regular">Regular</option>
-                              <option value="executive">Executive</option>
-                              <option value="president">President</option>
-                      </select>
-                      <button type="submit" class="room-search-params">Submit</button>
-              </div>
-          </form>
-      </div>
+        <h1 id="hotel-callisto-title">Hotel Callisto</h1>
+        <div id="room-search-form-container">
+            <div class="calendar-container">
+                <form id="room-search-form">
+                    <div id="room-search-param-container">
+                        <input type="text" name="daterange" value="01/01/2018 - 01/15/2018" class="room-search-params"/>
+                        <select name="roomtype" class="room-search-params" placeholder="Guests">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                        </select>
+                        <select name="roomtype" class="room-search-params">
+                            <option value="regular">Regular</option>
+                            <option value="executive">Executive</option>
+                            <option value="president">President</option>
+                        </select>
+                        <button type="submit" class="room-search-params">Submit</button>
+                </div>
+            </form>
+        </div>
+        </div>
     </div>
-  </div>
 </div>
 
 {% for room in rooms %} 
 <p>
-  {{room.id}} 
+    {{room.id}}
 </p>
 {% endfor %}
 
