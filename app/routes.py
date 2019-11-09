@@ -1,9 +1,9 @@
-from flask import render_template, redirect, url_for
+from flask import render_template, request, redirect, url_for, flash
 from flask_login import login_user, current_user, logout_user, login_required
     
 from app import login_manager
-from app.forms import LoginForm, RegisterForm, QueryForm
-from app.models import User, Room
+from app.forms import LoginForm, RegisterForm, QueryForm, MakeReservationForm
+from app.models import User, Room, Reservation
 
 from datetime import timedelta, date
 
@@ -14,42 +14,49 @@ def configure_routes(app):
         return render_template('home.html')
 
 
-    @app.route('/auth', methods=['GET', 'POST'])
+    @app.route('/auth')
     def auth_page():
         if current_user.is_authenticated:
             return redirect(url_for('room_list_page'))
 
-        login_form = LoginForm()
-        register_form = RegisterForm()
-        
-        # Handles login form submissions
-        if login_form.login_submit.data and login_form.validate():
-            user = User.check_login(email=login_form.email.data, password=login_form.password.data)
-            if user:
-                login_user(user, remember=login_form.remember.data)
-                return redirect(url_for('room_list_page'))
-            else:
-                login_form.raise_login_error()
-                
-        # Handles register form submissions
-        if register_form.register_submit.data and register_form.validate():
-            new_user = User.create(email=register_form.email.data, password=register_form.password.data)
+        return render_template('auth.html')
+
+
+    @app.route('/login', methods=['POST'])
+    def login():
+        f = LoginForm(data=request.form)
+        if f.validate():
+            #Login user
+            login_user(f.valid_user, remember=f.remember.data)
+            return redirect(url_for('room_list_page'))
+        else:
+            #put login errors in flash
+            for field in f:
+                for error in field.errors:
+                    flash(str(error), 'login_' + field.name)
+        return redirect(url_for('auth_page'))
+
+
+    @app.route('/register', methods=['POST'])
+    def register():
+        f = RegisterForm(data=request.form)
+        if f.validate():
+            new_user = User.create(email=f.email.data, password=f.password.data)
             login_user(new_user)
             return redirect(url_for('room_list_page'))
+        else:
+            for field in f:
+                for error in field.errors:
+                    flash(str(error), 'register_' + field.name)
+        return redirect(url_for('auth_page'))
 
-        data = {
-            'login_form': login_form,
-            'register_form': register_form
-        }
-
-        return render_template('auth.html', **data)
-    
     #User logout 
     @app.route('/logout')
     def logout():
         if current_user.is_authenticated:
             logout_user()
         return redirect(url_for('auth_page'))
+
 
     #displays list of rooms to the user
     @app.route('/rooms', methods=['GET', 'POST'])
@@ -77,7 +84,8 @@ def configure_routes(app):
     #for user reservation
     @app.route('/rooms/<id>/book')
     def reserve_room_page(id):
-        return render_template('reserve.html')
+        form = MakeReservationForm()
+        return render_template('reserve.html', form = form)
     
     #Bookings Page
     @app.route('/bookings')
@@ -87,12 +95,17 @@ def configure_routes(app):
         data = {
             'reservations' : reservations
         }
-        return render_template('bookings.html', data)
+        return render_template('bookings.html', **data)
     
     #CancelReservation Page
-   #@app.route('/cancellation')
-   #def cancellation_page():
-        #return render_template('cancelReservation.html')
+    @app.route('/bookings/<res_id>/cancel')
+    @login_required
+    def cancel_reservation(res_id):
+        """
+        res_id: id of reservation the client wants to cancel
+        """
+        current_user.delete_reservation(res_id)
+        return redirect(url_for('bookings_page'))
         
     #ViewReservations Page
    #@app.route('/view')
