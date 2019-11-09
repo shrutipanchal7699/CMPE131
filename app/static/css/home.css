@@ -1,22 +1,37 @@
+.flex-viewport-div {
+    height: 100vh;
+}
+
 #home-main-div {
+    
+}
+
+#home-viewport1 {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    height: 100vh;
     background-image: url(../images/glassbuilding.jpg);
     background-position: center;
     background-size: contain;
 }
 
-#hotel-callisto-title {
-    margin: 1em;
-    text-align: center;
-    color: #3b5249;
+#account-button {
+    position: fixed;
+    top: 2em;
+    right: 2em;
 }
 
-.calendar-container {
+#room-search-form-container {
     display: flex;
+    flex-grow: 1;
+    flex-direction: column;
     justify-content: center;
+}
+
+#hotel-callisto-title {
+    margin: 1em;
+    font-size: 4em;
+    text-align: center;
+    color: #3b5249;
 }
 
 #room-search-form {
@@ -27,15 +42,6 @@
 .room-search-param-container {
     display: flex;
     height: 100%;
-}
-
-#calendar {
-    height: calc(100% - 1em);
-    width: 16em;
-    margin: 0.5em 0em 0.5em 0em;
-    background-color: #60A4F8;
-    -webkit-box-shadow: 15px 16px 15px -15px rgba(35,83,127,0.6); 
-    box-shadow: 15px 16px 15px -15px rgba(35,83,127,0.6);
 }
 
 .room-search-params {
@@ -50,4 +56,5 @@
     border-radius: 4px;
     -webkit-box-shadow: 15px 16px 15px -15px rgba(35,83,127,0.6); 
     box-shadow: 15px 16px 15px -15px rgba(35,83,127,0.6);
+    display: inline;
 }
