@@ -84,15 +84,20 @@ class QueryForm(FlaskForm):
             ]
     )
 
-    room_type = SelectField('Room Type', choices=[
+    room_type = SelectField(choices=[
         ('reg','Regular'),
-        ('del','Deluxe'),
-        ('sdel','Super Deluxe')
+        ('exe','Executive'),
+        ('pre','President')
     ])
 
-    number_of_occupants = IntegerField(
-        'Number of Occupants'
-    )
+    number_of_occupants = SelectField(choices=[
+        ('1','1'),
+        ('2','2'),
+        ('3','3'),
+        ('4','4'),
+        ('5','5'),
+        ('6','6'),
+    ])
 
     def validate(self):
         #Both dates are not in the past
