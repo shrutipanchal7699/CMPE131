@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: rgb(159, 169, 182);
+    background-color: rgb(220, 220, 220);
 }
 
 .room-search-card {
@@ -10,7 +10,7 @@
     padding: 1em;
     margin: 1em;
     max-width: 80em;
-    background-color: rgb(238, 238, 238);
+    background-color: rgb(240, 240, 240);
     border-radius: 4px;
     -webkit-box-shadow: 15px 16px 15px -15px rgba(35,83,127,0.6); 
     box-shadow: 15px 16px 15px -15px rgba(35,83,127,0.6);
@@ -46,7 +46,7 @@
     flex-direction: column;
 }
 
-.book-button-div input {
+.book-button-div a {
     all: unset;
     position: absolute;
     bottom: 1em;
@@ -55,5 +55,6 @@
     border: 1px solid black;
     border-radius: 4px;
     padding: 0.1em 1em 0.1em 1em;
-
+    text-align: center;
+    cursor: pointer;
 }
