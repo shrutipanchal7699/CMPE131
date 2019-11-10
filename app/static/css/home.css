@@ -25,6 +25,8 @@ body {
     position: fixed;
     top: 2em;
     right: 2em;
+    -webkit-box-shadow: 15px 16px 15px -15px rgba(35,83,127,0.6); 
+    box-shadow: 15px 16px 15px -15px rgba(35,83,127,0.6);
 }
 
 #room-search-form-container {
