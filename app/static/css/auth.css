@@ -1,7 +1,12 @@
 #auth-main-div {
-    background-image: url(../images/glassbuilding.jpg);
+    display: flex;
+    flex-direction: column;
+    background: url(../images/glassbuilding.jpg) no-repeat center center;
     background-position: center;
-    background-size: contain;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
 }
 
 #login-signup-switch-container {
