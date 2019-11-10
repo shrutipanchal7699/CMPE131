@@ -46,4 +46,17 @@
     justify-content: center;
     margin-top: 1em;
     cursor: pointer;
+
+    background-color: rgb(235, 235, 235);
+
+    transition: background-color 0.25s, color 0.25s;
+    -webkit-transition: background-color 0.25s, color 0.25s;
+}
+
+#reserve-main-div > #reserve-detail-div > .reserve-book-button:hover {
+    background-color: rgb(80, 82, 95);
+    color: white;
+
+    transition: background-color 0.25s, color 0.25s;
+    -webkit-transition: background-color 0.25s, color 0.25s;
 }

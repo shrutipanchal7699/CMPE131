@@ -19,6 +19,7 @@
 
 .accordion-card-label-div {
     padding: 1em;
+    cursor: pointer;
 }
 
 #login-collapse {

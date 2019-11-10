@@ -53,16 +53,30 @@ body {
 }
 
 .room-search-params {
+    all: unset;
     display: flex;
-    margin: 0.5em 0em 0.5em 0.5em;
-    padding: 1em;
-    width: calc(100% - 0.5em);
     font-size: 1em;
-    height: 5em;
-    width: 14em;
-    border-style: none;
+    padding: 1em;
+    margin: 0em 0.5em 0em 0.5em;
+    background-color: white;
     border-radius: 4px;
     -webkit-box-shadow: 15px 16px 15px -15px rgba(35,83,127,0.6); 
     box-shadow: 15px 16px 15px -15px rgba(35,83,127,0.6);
     display: inline;
+}
+
+#room-search-param-submit {
+    background-color: rgb(157, 158, 167);
+    color: rgb(235, 235, 235);
+
+    transition: background-color 0.25s, color 0.25s;
+    -webkit-transition: background-color 0.25s, color 0.25s;
+}
+
+#room-search-param-submit:hover {
+    background-color: rgb(80, 82, 95);
+    color: white;
+
+    transition: background-color 0.25s, color 0.25s;
+    -webkit-transition: background-color 0.25s, color 0.25s;
 }

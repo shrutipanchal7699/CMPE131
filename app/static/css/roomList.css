@@ -12,6 +12,7 @@
     max-width: 80em;
     background-color: rgb(240, 240, 240);
     border-radius: 4px;
+    cursor: pointer;
     -webkit-box-shadow: 15px 16px 15px -15px rgba(35,83,127,0.6); 
     box-shadow: 15px 16px 15px -15px rgba(35,83,127,0.6);
 }
@@ -57,4 +58,17 @@
     padding: 0.1em 1em 0.1em 1em;
     text-align: center;
     cursor: pointer;
+
+    background-color: rgb(240, 240, 240);
+
+    transition: background-color 0.25s, color 0.25s;
+    -webkit-transition: background-color 0.25s, color 0.25s;
+}
+
+.book-button-div a:hover {
+    background-color: rgb(80, 82, 95);
+    color: white;
+
+    transition: background-color 0.25s, color 0.25s;
+    -webkit-transition: background-color 0.25s, color 0.25s;
 }

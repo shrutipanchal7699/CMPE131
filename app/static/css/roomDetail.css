@@ -44,6 +44,11 @@
     border-radius: 4px;
     padding: 0.1em 1em 0.1em 1em;
     text-align: center;
+
+    background-color: rgb(220, 220, 220);
+
+    transition: background-color 0.25s, color 0.25s;
+    -webkit-transition: background-color 0.25s, color 0.25s;
 }
 
 .detail-book-button:hover {
@@ -54,4 +59,10 @@
     padding: 0.1em 1em 0.1em 1em;
     text-align: center;
     cursor: pointer;
+
+    background-color: rgb(80, 82, 95);
+    color: white;
+
+    transition: background-color 0.25s, color 0.25s;
+    -webkit-transition: background-color 0.25s, color 0.25s;
 }
