@@ -1,0 +1,57 @@
+#room-detail-main-div {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    background-color: rgb(220, 220, 220);
+}
+
+#room-detail-main-div > #carousel-div {
+    display: flex;
+    justify-content: flex-end;
+    padding: 10em 1em 1em 1em;
+    min-width: 30em;
+    max-width: 50em;
+}
+
+#room-detail-main-div > #carousel-div > #carousel-inner-div > #room-image-carousel {
+    -webkit-box-shadow: 15px 16px 15px -15px rgba(35,83,127,0.6); 
+    box-shadow: 15px 16px 15px -15px rgba(35,83,127,0.6);
+}
+
+#room-detail-main-div > #detail-div {
+    display: flex;
+    flex-direction: column;
+    padding: 11em 1em 1em 1em;
+    max-width: 30em;
+}
+
+#room-detail-main-div > #carousel-div > #carousel-inner-div {
+    margin: 1em;
+}
+
+#room-detail-main-div > #detail-div > .amenities {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    max-height: 8em;
+    padding-left: 1em;
+}
+
+.detail-book-button {
+    all: unset;
+    font-size: 2em;
+    border: 1px solid black;
+    border-radius: 4px;
+    padding: 0.1em 1em 0.1em 1em;
+    text-align: center;
+}
+
+.detail-book-button:hover {
+    all: unset;
+    font-size: 2em;
+    border: 1px solid black;
+    border-radius: 4px;
+    padding: 0.1em 1em 0.1em 1em;
+    text-align: center;
+    cursor: pointer;
+}
