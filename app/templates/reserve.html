@@ -3,13 +3,66 @@
 {% block body %}
 {% from "_formhelpers.html" import render_field %}
 
-<h1>Reserve Room Page</h1>
-<form method="POST" action="{{ url_for('room_list_page') }}"/>
-    {{ form.csrf_token }}
-    {{ render_field(form.check_in_date) }}<br/>
-    {{ render_field(form.check_out_date) }} <br/>
-    {{ render_field(form.room_type) }} <br/>
-    {{ render_field(form.number_of_occupants) }} <br/>
-    <input type="submit" value="Confirm Reservation" />
-</form>
+<div id="reserve-main-div" class="flex-viewport-div">
+    <div id="reserve-detail-div">
+        <div class="details">
+            <h1>Regular Room</h1>
+            <h4>2 beds, 1 bath</h4>
+        </div>
+        <ul class="amenities">
+            <li>Free Wireless Internet</li>
+            <li>Free Parking</li>
+            <li>Complimentary Toiletries</li>
+            <li>Luxury Bedding</li>
+            <li>Cable TV</li>
+            <li>Indoor Swimming Pool</li>
+            <li>Room Service</li>
+            <li>Free Early Check-in</li>
+            <li>Air Conditioning</li>
+            <li>Hot Tub</li>
+        </ul>
+        <div id="booking-summary-div">
+            <h4>Booking Summary</h4>
+            <div class="booking-info-item">
+                <p>Room#</p>
+                <p>308</p>
+            </div>
+            <div class="booking-info-item">
+                <p>Floor</p>
+                <p>3</p>
+            </div>
+            <div class="booking-info-item">
+                <p>Parking Spot</p>
+                <p>B 10</p>
+            </div>
+            <div class="booking-info-item">
+                <p>Dates</p>
+                <p>09/30/2019 - 10/01/2019</p>
+            </div>
+        </div>
+
+        <div id="cost-summary-div">
+            <h4>Cost Summary</h4>
+            <div class="cost-info-item">
+                <p>Rate</p>
+                <p>200</p>
+            </div>
+            <div class="cost-info-item">
+                <p>Local Fee</p>
+                <p>$0.40</p>
+            </div>
+            <div class="cost-info-item">
+                <p>Estimated government taxes and fees</p>
+                <p>$40</p>
+            </div>
+            <hr/>
+            <div class="cost-info-item">
+                <h4>Total</h4>
+                <h4>$240.40</h4>
+            </div>
+        </div>
+        <a href="" class="reserve-book-button">Book</a>
+    </div>
+</div>
+
 {% endblock %}
