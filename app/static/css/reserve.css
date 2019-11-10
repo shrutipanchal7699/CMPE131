@@ -1,0 +1,49 @@
+#reserve-main-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(220, 220, 220);
+}
+
+#reserve-main-div > #reserve-detail-div {
+    padding: 6em;
+    width: 40em;
+    background-color: rgb(235, 235, 235);
+    border-radius: 4px;
+    -webkit-box-shadow: 15px 16px 15px -15px rgba(35,83,127,0.6); 
+    box-shadow: 15px 16px 15px -15px rgba(35,83,127,0.6);
+}
+
+#reserve-main-div > #reserve-detail-div > .amenities {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    max-height: 8em;
+    padding-left: 1em;
+}
+
+#booking-summary-div {
+    margin: 2em 0 1em 0;
+}
+
+#booking-summary-div > .booking-info-item {
+    display: flex;
+    justify-content: space-between;
+}
+
+#cost-summary-div > .cost-info-item {
+    display: flex;
+    justify-content: space-between;
+}
+
+#reserve-main-div > #reserve-detail-div > .reserve-book-button {
+    all: unset;
+    display: flex;
+    font-size: 2em;
+    border: 1px solid black;
+    border-radius: 4px;
+    padding: 0.1em 1em 0.1em 1em;
+    justify-content: center;
+    margin-top: 1em;
+    cursor: pointer;
+}
