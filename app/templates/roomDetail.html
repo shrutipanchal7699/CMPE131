@@ -1,5 +1,10 @@
 {% extends 'base.html' %}
 
+{% block statics %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/roomDetail.css') }}">
+{% endblock %}
+
 {% block body %}
 <div id="room-detail-main-div" class="flex-viewport-div">
     <div id="carousel-div">

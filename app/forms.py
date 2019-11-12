@@ -1,4 +1,4 @@
-from datetime import date
+import datetime
 
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, ValidationError, IntegerField, SelectField
@@ -70,42 +70,25 @@ class RegisterForm(FlaskForm):
     confirm  = PasswordField('Repeat Password')
 
 class QueryForm(FlaskForm):
-    check_in_date = DateField(
-        'Check In Date',
-        validators = [
-            InputRequired()
-            ]
-    )
+    check_in_date = DateField('Check In Date')
 
-    check_out_date = DateField(
-        'Check Out Date',
-        validators = [
-            InputRequired()
-            ]
-    )
+    check_out_date = DateField('Check Out Date')
 
     room_type = SelectField(choices=[
-        ('reg','Regular'),
-        ('exe','Executive'),
-        ('pre','President')
+        ('Regular','Regular'),
+        ('Executive','Executive'),
+        ('President','President')
     ])
 
-    number_of_occupants = SelectField(choices=[
-        ('1','1'),
-        ('2','2'),
-        ('3','3'),
-        ('4','4'),
-        ('5','5'),
-        ('6','6'),
-    ])
+    num_occupants = IntegerField('Number of Occupants')
 
     def validate(self):
         #Both dates are not in the past
         res = super(QueryForm, self).validate()
-        if self.check_in_date.data < date.today():
+        if self.check_in_date.data < datetime.date.today():
             self.raise_date_in_past_error(self.check_in_date)
             return False
-        if self.check_out_date.data < date.today():
+        if self.check_out_date.data < datetime.date.today():
             self.raise_date_in_past_error(self.check_out_date)
             return False
         #Start date has to be earlier than end date
@@ -138,9 +121,9 @@ class MakeReservationForm(FlaskForm):
     )
 
     room_type = SelectField('Room Type', choices=[
-        ('reg','Regular'),
-        ('del','Deluxe'),
-        ('sdel','Super Deluxe')],
+        ('Regular','Regular'),
+        ('Executive','Executive'),
+        ('President','President')],
          validators = [
             InputRequired()
             ]

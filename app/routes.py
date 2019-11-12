@@ -1,25 +1,32 @@
 from flask import render_template, request, redirect, url_for, flash
 from flask_login import login_user, current_user, logout_user, login_required
-    
+
 from app import login_manager
 from app.forms import LoginForm, RegisterForm, QueryForm, MakeReservationForm
 from app.models import User, Room, Reservation
 
-from datetime import timedelta, date
+from datetime import timedelta, date, datetime
 
 def configure_routes(app):
     
     @app.route('/')
     def home_page():
-        return render_template('home.html')
-
+        return redirect(url_for('room_list_page'))
 
     @app.route('/auth')
-    def auth_page():
+    @app.route('/auth/<form>')
+    def auth_page(form=None):
         if current_user.is_authenticated:
             return redirect(url_for('room_list_page'))
-
-        return render_template('auth.html')
+        data = {
+                'register_collapse': 'collapse',
+                'login_collapse': 'collapse'
+            }
+        if form == 'login':
+            data['login_collapse'] = 'collapse show'
+        elif form == 'register':
+            data['register_collapse'] = 'collapse show'
+        return render_template('auth.html', **data)
 
 
     @app.route('/login', methods=['POST'])
@@ -34,7 +41,7 @@ def configure_routes(app):
             for field in f:
                 for error in field.errors:
                     flash(str(error), 'login_' + field.name)
-        return redirect(url_for('auth_page'))
+        return redirect(url_for('auth_page', form='login'))
 
 
     @app.route('/register', methods=['POST'])
@@ -48,7 +55,7 @@ def configure_routes(app):
             for field in f:
                 for error in field.errors:
                     flash(str(error), 'register_' + field.name)
-        return redirect(url_for('auth_page'))
+        return redirect(url_for('auth_page', form='register'))
 
     #User logout 
     @app.route('/logout')
@@ -61,20 +68,25 @@ def configure_routes(app):
     #displays list of rooms to the user
     @app.route('/rooms', methods=['GET', 'POST'])
     def room_list_page():
-        query = {
-            'check_in_date': date.today() + timedelta(days = 1),
-            'check_out_date': date.today() + timedelta(days = 6)
+        return render_template('roomList.html')
+
+    @app.route('/fetch_rooms')
+    def fetch_room_list():
+        cleaned_data = {
+            'csrf_token': request.args.get('csrf_token'),
+            'check_in_date' : datetime.strptime(request.args.get('check_in_date'), '%Y-%m-%d').date(),
+            'check_out_date' : datetime.strptime(request.args.get('check_out_date'), '%Y-%m-%d').date(),
+            'num_occupants' : int(request.args.get('num_occupants')),
+            'room_type' : request.args.get('room_type')
         }
-        rooms = []
-        form = QueryForm()
-        if form.validate_on_submit():
-            rooms = Room.fetch_room_to_query({
-                'check_in_date': form.check_in_date.data,
-                'check_out_date': form.check_out_date.data,
-                'room_type': form.room_type.data,
-                'num_occupants': form.number_of_occupants.data
-            })
-        return render_template('roomList.html', form=form, rooms=rooms)
+
+        f = QueryForm(data=cleaned_data)
+        if f.validate():
+            rooms = Room.fetch_room_to_query(cleaned_data)
+            return render_template('roomSearchResults.html', rooms=rooms)
+        else:
+            print(f.errors.items())
+        return "Hello"
 
     # displays the details of different rooms
     @app.route('/rooms/<id>')
@@ -106,8 +118,3 @@ def configure_routes(app):
         """
         current_user.delete_reservation(res_id)
         return redirect(url_for('bookings_page'))
-        
-    #ViewReservations Page
-   #@app.route('/view')
-   #def viewReservation_page():
-        #return render_template('viewReservation.html')

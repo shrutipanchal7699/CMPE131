@@ -1,31 +1,59 @@
 {% extends 'base.html' %}
 
+{% block statics %}
+{{ super() }}
+<!-- Scripts and CSS for DatePicker -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/roomList.css') }}">
+{% endblock %}
+
 {% block body %}
 <script>
-    $(function() {
-        $('input[name="daterange"]').daterangepicker({
-        opens: 'center',
-        autoApply: true
-        }, function(start, end, label) {
-            // Some action here
+    $(document).ready(() => {
+        $(function () {
+            $('input[name="daterange"]').daterangepicker({
+                opens: 'center',
+                autoApply: true,
+            });
         });
-    });
+
+        $('#room-search-form').submit(function (e) {
+            e.preventDefault();
+            const url = $(this).attr('action');
+            const formData = new FormData(this);
+            const dateRangePicker = $('input[name="daterange"]').data('daterangepicker');
+            const csrf_token = "{{ csrf_token() }}";
+
+            $.ajax({
+                url: url,
+                data: {
+                    csrf_token: csrf_token,
+                    check_in_date: dateRangePicker.startDate.format('YYYY-MM-DD'),
+                    check_out_date: dateRangePicker.endDate.format('YYYY-MM-DD'),
+                    num_occupants: formData.get('numOccupants'),
+                    room_type: formData.get('roomtype')
+                },
+
+            }).done(data => {
+                $('#room-search-results-main').html(data)
+            })
+        })
+    })
 </script>
-{% from "_formhelpers.html" import render_field %}
-{% if current_user.is_authenticated %}
-    Hi {{ current_user.name }}!
-    <a href="{{ url_for('logout') }}">Click here to log out</a>
-{% endif %}
 
 <div id="home-main-div">
     <div id="home-viewport1" class="flex-viewport-div">
         <h1 id="hotel-callisto-title">Hotel Callisto</h1>
         <div id="room-search-form-container">
             <div class="calendar-container">
-                <form id="room-search-form">
+                <form id="room-search-form" action="{{ url_for('fetch_room_list') }}">
                     <div id="room-search-param-container">
-                        <input type="text" name="daterange" value="01/01/2018 - 01/15/2018" class="room-search-params"/>
-                        <select name="roomtype" class="room-search-params" placeholder="Guests">
+                        <input type="text" name="daterange" value="" class="room-search-params" />
+                        <select name="numOccupants" class="room-search-params" placeholder="Guests">
                             <option value="1">1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
@@ -34,74 +62,18 @@
                             <option value="6">6</option>
                         </select>
                         <select name="roomtype" class="room-search-params">
-                            <option value="regular">Regular</option>
-                            <option value="executive">Executive</option>
-                            <option value="president">President</option>
+                            <option value="Regular">Regular</option>
+                            <option value="Executive">Executive</option>
+                            <option value="President">President</option>
                         </select>
                         <button type="submit" class="room-search-params" id="room-search-param-submit">Submit</button>
-                </div>
-            </form>
-        </div>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
     <div id="room-search-results-main">
 
-        <div class="room-search-card">
-            <div class="image-div" onclick="location.href='/rooms/1';">
-                <img src="../static/images/rooms/regular/1.jpg">
-            </div>
-            <div class="search-item-brief-details" onclick="location.href='/rooms/1';">
-                <h1>2 beds, 1 bath</h1>
-                <h4>Regular</h4>
-                <ul>
-                    <li>Wifi</li>
-                    <li>Toiletries</li>
-                    <li>Air conditioning</li>
-                </ul>
-                <h4 class="price">200 USD<span style="font-size: 0.5em;">/night</span></h4>
-            </div>
-            <div class="book-button-div">
-                <a href="/rooms/1/book">Book</a>
-            </div>
-        </div>
-        
-        <div class="room-search-card">
-            <div class="image-div" onclick="location.href='/rooms/1';">
-                <img src="../static/images/rooms/regular/1.jpg">
-            </div>
-            <div class="search-item-brief-details" onclick="location.href='/rooms/1';">
-                <h1>2 beds, 1 bath</h1>
-                <h4>Regular</h4>
-                <ul>
-                    <li>Wifi</li>
-                    <li>Toiletries</li>
-                    <li>Air conditioning</li>
-                </ul>
-                <h4 class="price">200 USD<span style="font-size: 0.5em;">/night</span></h4>
-            </div>
-            <div class="book-button-div">
-                <a href="/rooms/1/book">Book</a>
-            </div>
-        </div>
-
-        <div class="room-search-card">
-            <div class="image-div" onclick="location.href='/rooms/1';">
-                <img src="../static/images/rooms/regular/1.jpg">
-            </div>
-            <div class="search-item-brief-details" onclick="location.href='/rooms/1';">
-                <h1>2 beds, 1 bath</h1>
-                <h4>Regular</h4>
-                <ul>
-                    <li>Wifi</li>
-                    <li>Toiletries</li>
-                    <li>Air conditioning</li>
-                </ul>
-                <h4 class="price">200 USD<span style="font-size: 0.5em;">/night</span></h4>
-            </div>
-            <div class="book-button-div">
-                <a href="/rooms/1/book">Book</a>
-            </div>
-        </div>
     </div>
 </div>
 

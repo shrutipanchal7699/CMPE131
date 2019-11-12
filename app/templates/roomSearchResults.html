@@ -1,0 +1,22 @@
+
+{% for room in rooms %}
+<div class="room-search-card">
+    <div class="image-div" onclick="location.href='{{ url_for("room_detail_page", id=room.id)}}';">
+        <img class="room-image" src="../static/images/rooms/regular/1.jpg">
+    </div>
+    <div class="search-item-brief-details" onclick="location.href='{{ url_for("room_detail_page", id=room.id)}}';">
+        <h1>{{ room.accomodations }}</h1>
+        <h4>{{ room.room_type }}</h4>
+        <ul>
+            <li>Wifi</li>
+            <li>Toiletries</li>
+            <li>Air conditioning</li>
+        </ul>
+        <h4 class="price">{{ room.price }} USD<span style="font-size: 0.5em;">/night</span></h4>
+    </div>
+    <div class="book-button-div">
+        <a href="{{ url_for('reserve_room_page', id=room.id) }}">Book</a>
+    </div>
+</div>
+
+{% endfor %}
