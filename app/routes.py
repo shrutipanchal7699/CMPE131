@@ -1,11 +1,11 @@
 from flask import render_template, request, redirect, url_for, flash
 from flask_login import login_user, current_user, logout_user, login_required
-    
+
 from app import login_manager
 from app.forms import LoginForm, RegisterForm, QueryForm, MakeReservationForm
 from app.models import User, Room, Reservation
 
-from datetime import timedelta, date
+from datetime import timedelta, date, datetime
 
 def configure_routes(app):
     
@@ -61,20 +61,25 @@ def configure_routes(app):
     #displays list of rooms to the user
     @app.route('/rooms', methods=['GET', 'POST'])
     def room_list_page():
-        query = {
-            'check_in_date': date.today() + timedelta(days = 1),
-            'check_out_date': date.today() + timedelta(days = 6)
+        return render_template('roomList.html')
+
+    @app.route('/fetch_rooms')
+    def fetch_room_list():
+        cleaned_data = {
+            'csrf_token': request.args.get('csrf_token'),
+            'check_in_date' : datetime.strptime(request.args.get('check_in_date'), '%Y-%m-%d').date(),
+            'check_out_date' : datetime.strptime(request.args.get('check_out_date'), '%Y-%m-%d').date(),
+            'num_occupants' : int(request.args.get('num_occupants')),
+            'room_type' : request.args.get('room_type')
         }
-        rooms = []
-        form = QueryForm()
-        if form.validate_on_submit():
-            rooms = Room.fetch_room_to_query({
-                'check_in_date': form.check_in_date.data,
-                'check_out_date': form.check_out_date.data,
-                'room_type': form.room_type.data,
-                'num_occupants': form.number_of_occupants.data
-            })
-        return render_template('roomList.html', form=form, rooms=rooms)
+
+        f = QueryForm(data=cleaned_data)
+        if f.validate():
+            rooms = Room.fetch_room_to_query(cleaned_data)
+            return render_template('roomSearchResults.html', rooms=rooms)
+        else:
+            print(f.errors.items())
+        return "Hello"
 
     # displays the details of different rooms
     @app.route('/rooms/<id>')
@@ -106,8 +111,3 @@ def configure_routes(app):
         """
         current_user.delete_reservation(res_id)
         return redirect(url_for('bookings_page'))
-        
-    #ViewReservations Page
-   #@app.route('/view')
-   #def viewReservation_page():
-        #return render_template('viewReservation.html')

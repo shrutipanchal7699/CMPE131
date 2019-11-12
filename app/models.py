@@ -48,10 +48,10 @@ class User(UserMixin, db.Model):
 #class for Room 
 class Room(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    room_type = db.Column(db.String(128))
-    room_number = db.Column(db.Integer)
-    max_occupants = db.Column(db.Integer)
-
+    accomodations = db.Column(db.String(128), nullable=False)
+    room_type = db.Column(db.String(128), nullable=False)
+    price = db.Column(db.Float, nullable=False)
+    max_occupants = db.Column(db.Integer, nullable=False)
 
     @classmethod
     def fetch_room_to_query(cls, query):
@@ -74,7 +74,7 @@ class Room(db.Model):
             lambda room: room.is_available_between(query['check_in_date'], query['check_out_date']), 
             rooms)
 
-        return rooms
+        return list(rooms)
 
     def is_available_between(self, start, end):
         """
