@@ -11,15 +11,22 @@ def configure_routes(app):
     
     @app.route('/')
     def home_page():
-        return render_template('home.html')
-
+        return redirect(url_for('room_list_page'))
 
     @app.route('/auth')
-    def auth_page():
+    @app.route('/auth/<form>')
+    def auth_page(form=None):
         if current_user.is_authenticated:
             return redirect(url_for('room_list_page'))
-
-        return render_template('auth.html')
+        data = {
+                'register_collapse': 'collapse',
+                'login_collapse': 'collapse'
+            }
+        if form == 'login':
+            data['login_collapse'] = 'collapse show'
+        elif form == 'register':
+            data['register_collapse'] = 'collapse show'
+        return render_template('auth.html', **data)
 
 
     @app.route('/login', methods=['POST'])
@@ -34,7 +41,7 @@ def configure_routes(app):
             for field in f:
                 for error in field.errors:
                     flash(str(error), 'login_' + field.name)
-        return redirect(url_for('auth_page'))
+        return redirect(url_for('auth_page', form='login'))
 
 
     @app.route('/register', methods=['POST'])
@@ -48,7 +55,7 @@ def configure_routes(app):
             for field in f:
                 for error in field.errors:
                     flash(str(error), 'register_' + field.name)
-        return redirect(url_for('auth_page'))
+        return redirect(url_for('auth_page', form='register'))
 
     #User logout 
     @app.route('/logout')

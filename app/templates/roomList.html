@@ -1,5 +1,16 @@
 {% extends 'base.html' %}
 
+{% block statics %}
+{{ super() }}
+<!-- Scripts and CSS for DatePicker -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/roomList.css') }}">
+{% endblock %}
+
 {% block body %}
 <script>
     $(document).ready(() => {
@@ -33,11 +44,6 @@
         })
     })
 </script>
-{% from "_formhelpers.html" import render_field %}
-{% if current_user.is_authenticated %}
-Hi {{ current_user.name }}!
-<a href="{{ url_for('logout') }}">Click here to log out</a>
-{% endif %}
 
 <div id="home-main-div">
     <div id="home-viewport1" class="flex-viewport-div">
