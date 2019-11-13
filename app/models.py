@@ -4,6 +4,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import and_, or_
 
+from app.helpers import cast_date
+
 db = SQLAlchemy()
 
 class User(UserMixin, db.Model):
@@ -52,6 +54,10 @@ class Room(db.Model):
     room_type = db.Column(db.String(128), nullable=False)
     price = db.Column(db.Float, nullable=False)
     max_occupants = db.Column(db.Integer, nullable=False)
+
+    @classmethod
+    def get_by_id(cls, id):
+        return cls.query.get(int(id))
 
     @classmethod
     def fetch_room_to_query(cls, query):
@@ -123,7 +129,23 @@ class Reservation(db.Model):
     def fetch_users_reservation(cls, user_id):
         reservations = cls.query.filter(Reservation.user_id == user_id)
         return reservations
-    
+
+    @classmethod
+    def create(cls, check_in_date, check_out_date, room_id, user_id, **kwargs):
+        if isinstance(check_in_date, str):
+            check_in_date = cast_date(check_in_date)
+        if isinstance(check_out_date, str):
+            check_out_date = cast_date(check_out_date)
+
+        new_reservation = cls(
+            check_in_date=check_in_date,
+            check_out_date=check_out_date,
+            user_id=user_id,
+            room_id=room_id
+        )
+        db.session.add(new_reservation)
+        db.session.commit()
+        return new_reservation
 
 #class DeleteReservation(db.Model):
 #models.User.query.delete()
