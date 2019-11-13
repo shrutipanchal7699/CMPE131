@@ -69,6 +69,31 @@ class RegisterForm(FlaskForm):
 
     confirm  = PasswordField('Repeat Password')
 
+class UpdatePasswordForm(FlaskForm):
+    new_password = PasswordField(
+        'New password', 
+        validators=[
+            InputRequired(),
+            Length(min=8, max=80)])
+    password = PasswordField(
+        'Old password', 
+        validators=[
+            InputRequired(),
+            EqualTo('confirm', message='Passwords must match')])
+
+    confirm  = PasswordField('Repeat Old Password')
+
+
+class DeleteAccountForm(FlaskForm):
+    password = PasswordField(
+        'Password', 
+        validators=[
+            InputRequired(),
+            EqualTo('confirm', message='Passwords must match')])
+
+    confirm  = PasswordField('Repeat Password')
+
+
 class QueryForm(FlaskForm):
     check_in_date = DateField('Check In Date')
 

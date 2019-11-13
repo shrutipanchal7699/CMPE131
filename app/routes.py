@@ -4,13 +4,13 @@ from flask import make_response, render_template, session, request, redirect, ur
 from flask_login import login_user, current_user, logout_user, login_required
 
 from app import login_manager
-from app.forms import LoginForm, RegisterForm, QueryForm, MakeReservationForm
+from app.forms import LoginForm, RegisterForm, QueryForm, MakeReservationForm, UpdatePasswordForm, DeleteAccountForm
 from app.models import User, Room, Reservation
 from app.helpers import cast_date
 
 
 def configure_routes(app):
-    
+
     @app.route('/')
     def home_page():
         return redirect(url_for('room_list_page'))
@@ -58,13 +58,42 @@ def configure_routes(app):
                     flash(str(error), 'register_' + field.name)
         return redirect(url_for('auth_page', form='register'))
 
+    @app.route('/profile')
+    @login_required
+    def profile_page():
+        update_pw_form = UpdatePasswordForm()
+        delete_form = DeleteAccountForm()
+
+        return render_template('profile.html', update_pw_form=update_pw_form, delete_form=delete_form)
+
+    @app.route('/profile/update', methods=['POST'])
+    @login_required
+    def update_password():
+        f = UpdatePasswordForm(data=request.form)
+        if f.validate():
+            current_user.update_password(
+                new_password=f.new_password.data,
+                old_password=f.password.data
+            )
+        return redirect(url_for('profile_page'))
+
+    @app.route('/profile/delete', methods=['POST'])
+    @login_required
+    def delete_account():
+        f = DeleteAccountForm(data=request.form)
+        if f.validate():
+            current_user.delete_account(password=f.password.data)
+            logout_user()
+            return redirect(url_for('auth_page'))
+ 
+        return redirect(url_for('profile_page'))
+
     #User logout 
     @app.route('/logout')
     def logout():
         if current_user.is_authenticated:
             logout_user()
         return redirect(url_for('auth_page'))
-
 
     #displays list of rooms to the user
     @app.route('/rooms')
@@ -89,7 +118,7 @@ def configure_routes(app):
             session['num_occupants'] = cleaned_data['num_occupants']
             return render_template('roomSearchResults.html', rooms=rooms)
         else:
-            print(f.errors.items())
+            pass
         return "Hello"
 
     # displays the details of different rooms

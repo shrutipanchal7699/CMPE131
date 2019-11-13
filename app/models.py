@@ -35,8 +35,12 @@ class User(UserMixin, db.Model):
         if user:
             if check_password_hash(user.password_hash, password):
                 return user
-
         return None
+
+    def delete_account(self, password):
+        if check_password_hash(self.password_hash, password):
+            db.session.delete(self)
+            db.session.commit()
 
     def delete_reservation(self, res_id):
         target =  Reservation.query.get(int(res_id))
@@ -45,6 +49,13 @@ class User(UserMixin, db.Model):
             db.session.commit()
             return True
         return False
+
+    def update_password(self, new_password, old_password):
+        if check_password_hash(self.password_hash, old_password):
+            pw_hash = generate_password_hash(new_password, method='sha256')
+            self.password_hash = pw_hash
+            db.session.commit()
+
 
     
 #class for Room 
@@ -94,14 +105,14 @@ class Room(db.Model):
 #reservation Class 
 class Reservation(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    check_in_date = db.Column(db.Date, nullable = False)
-    check_out_date = db.Column(db.Date, nullable = False)
+    check_in_date = db.Column(db.Date, nullable=False)
+    check_out_date = db.Column(db.Date, nullable=False)
 
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable = False)
-    user = db.relationship('User',backref = db.backref('reservations', lazy = True))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    user = db.relationship('User',backref=db.backref('reservations', lazy=True, cascade="all"))
 
-    room_id = db.Column(db.Integer, db.ForeignKey('room.id'), nullable = False)
-    room = db.relationship('Room',backref = db.backref('reservations', lazy = True))
+    room_id = db.Column(db.Integer, db.ForeignKey('room.id'), nullable=False)
+    room = db.relationship('Room',backref=db.backref('reservations', lazy=True, cascade="all"))
 
     @classmethod
     def find_conflicting_reservations(cls, room_id, start_date, end_date):

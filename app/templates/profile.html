@@ -1,0 +1,25 @@
+{%extends 'base.html'%}
+
+{% block body %}
+{% from "_formhelpers.html" import render_field %}
+
+<h1>Profile settings Page</h1>
+
+<h2>Update password</h2>
+<form action="{{ url_for('update_password') }}" method="POST">
+    {{ update_pw_form.hidden_tag() }}
+    {{render_field(update_pw_form.new_password)}}
+    {{render_field(update_pw_form.password)}}
+    {{render_field(update_pw_form.confirm)}}
+    <input type="submit" value="Submit" />
+</form>
+
+<h2>Delete account</h2>
+<form action="{{ url_for('delete_account') }}", method="POST">
+    {{ delete_form.hidden_tag() }}
+    {{render_field(delete_form.password)}}
+    {{render_field(delete_form.confirm)}}
+    <input type="submit" value="Submit" />
+</form>
+
+{% endblock %}
