@@ -147,8 +147,5 @@ class Reservation(db.Model):
         db.session.commit()
         return new_reservation
 
-#class DeleteReservation(db.Model):
-#models.User.query.delete()
-
 
 
