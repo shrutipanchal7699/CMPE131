@@ -38,3 +38,23 @@ On Windows:
 **6. Run the app:**
 >$ flask run
 
+
+#### II. Use cases:
+
+**1. Login and Registration**
+
+**2. Update Password**
+
+**3. Create Room (admin)**
+
+**4. Search Room**
+
+**5. View Room detail**
+
+**6. Book room**
+
+**7. View Reservation**
+
+**8. Cancel Reservation**
+
+
