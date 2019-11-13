@@ -36,7 +36,7 @@
     justify-content: space-between;
 }
 
-#reserve-main-div > #reserve-detail-div > .reserve-book-button {
+#reserve-main-div > #reserve-detail-div > form > .reserve-book-button {
     all: unset;
     display: flex;
     font-size: 2em;
@@ -53,7 +53,7 @@
     -webkit-transition: background-color 0.25s, color 0.25s;
 }
 
-#reserve-main-div > #reserve-detail-div > .reserve-book-button:hover {
+#reserve-main-div > #reserve-detail-div > form > .reserve-book-button:hover {
     background-color: rgb(80, 82, 95);
     color: white;
 

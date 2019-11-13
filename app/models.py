@@ -4,6 +4,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import and_, or_
 
+from app.helpers import cast_date
+
 db = SQLAlchemy()
 
 class User(UserMixin, db.Model):
@@ -33,8 +35,12 @@ class User(UserMixin, db.Model):
         if user:
             if check_password_hash(user.password_hash, password):
                 return user
-
         return None
+
+    def delete_account(self, password):
+        if check_password_hash(self.password_hash, password):
+            db.session.delete(self)
+            db.session.commit()
 
     def delete_reservation(self, res_id):
         target =  Reservation.query.get(int(res_id))
@@ -44,6 +50,13 @@ class User(UserMixin, db.Model):
             return True
         return False
 
+    def update_password(self, new_password, old_password):
+        if check_password_hash(self.password_hash, old_password):
+            pw_hash = generate_password_hash(new_password, method='sha256')
+            self.password_hash = pw_hash
+            db.session.commit()
+
+
     
 #class for Room 
 class Room(db.Model):
@@ -52,6 +65,10 @@ class Room(db.Model):
     room_type = db.Column(db.String(128), nullable=False)
     price = db.Column(db.Float, nullable=False)
     max_occupants = db.Column(db.Integer, nullable=False)
+
+    @classmethod
+    def get_by_id(cls, id):
+        return cls.query.get(int(id))
 
     @classmethod
     def fetch_room_to_query(cls, query):
@@ -88,14 +105,14 @@ class Room(db.Model):
 #reservation Class 
 class Reservation(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    check_in_date = db.Column(db.Date, nullable = False)
-    check_out_date = db.Column(db.Date, nullable = False)
+    check_in_date = db.Column(db.Date, nullable=False)
+    check_out_date = db.Column(db.Date, nullable=False)
 
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable = False)
-    user = db.relationship('User',backref = db.backref('reservations', lazy = True))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    user = db.relationship('User',backref=db.backref('reservations', lazy=True, cascade="all"))
 
-    room_id = db.Column(db.Integer, db.ForeignKey('room.id'), nullable = False)
-    room = db.relationship('Room',backref = db.backref('reservations', lazy = True))
+    room_id = db.Column(db.Integer, db.ForeignKey('room.id'), nullable=False)
+    room = db.relationship('Room',backref=db.backref('reservations', lazy=True, cascade="all"))
 
     @classmethod
     def find_conflicting_reservations(cls, room_id, start_date, end_date):
@@ -123,10 +140,23 @@ class Reservation(db.Model):
     def fetch_users_reservation(cls, user_id):
         reservations = cls.query.filter(Reservation.user_id == user_id)
         return reservations
-    
 
-#class DeleteReservation(db.Model):
-#models.User.query.delete()
+    @classmethod
+    def create(cls, check_in_date, check_out_date, room_id, user_id, **kwargs):
+        if isinstance(check_in_date, str):
+            check_in_date = cast_date(check_in_date)
+        if isinstance(check_out_date, str):
+            check_out_date = cast_date(check_out_date)
+
+        new_reservation = cls(
+            check_in_date=check_in_date,
+            check_out_date=check_out_date,
+            user_id=user_id,
+            room_id=room_id
+        )
+        db.session.add(new_reservation)
+        db.session.commit()
+        return new_reservation
 
 
 
