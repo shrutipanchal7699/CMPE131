@@ -34,8 +34,8 @@
     </div>
     <div id="detail-div">
         <div class="details">
-            <h1>Regular Room, $200<span style="font-size:0.5em;">/night</span></h1>
-            <h4>2 beds, 1 bath</h4>
+            <h1>{{room.room_type}} Room, ${{room.price}}<span style="font-size:0.5em;">/night</span></h1>
+            <h4>{{room.accomodation}}</h4>
             <p>In at lorem quam. Curabitur in massa tristique, laoreet quam in, mattis neque. Donec sagittis gravida ipsum sit amet consequat. Vivamus a efficitur sapien. Vestibulum in ultrices lorem. Integer ultricies ipsum et risus efficitur, vitae posuere nibh mollis. Vestibulum cursus elementum augue, a bibendum tellus eleifend a. Praesent viverra tortor sit amet varius ornare. Vivamus maximus neque id enim suscipit vestibulum.</p>
         </div>
         <ul class="amenities">
@@ -50,7 +50,7 @@
             <li>Air Conditioning</li>
             <li>Hot Tub</li>
         </ul>
-        <a href="/rooms/1/book" class="detail-book-button">Book</a>
+        <a href="{{url_for('reserve_room_page', id=room.id)}}" class="detail-book-button">Book</a>
     </div>
 </div>
 {% endblock %}
