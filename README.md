@@ -42,19 +42,56 @@ On Windows:
 #### II. Use cases:
 
 **1. Login and Registration**
+a. On the hompage, click Menu button on the top right and select "Login or Register"
+b. Signup for an account
+c. Confirm that user is signed it by checking if "Logout" option is listed in the Menu
 
 **2. Update Password**
+a. While logged in, open Menu options and select "My Profile"
+b. Enter new password and old password
 
 **3. Create Room (admin)**
+a. Go to http://127.0.0.1:5000/admin/room/
+b. Click "Create" tab
+c. Fill in the input boxes. For example
+    Accomodations = "2 beds, 1 bath"
+    Room Type = "Regular"
+    Price = "200"
+    Max Occupants = "2"
+    Reservations can be left blank
+d. Click Save
+e. Add more rooms to get more results for search
 
 **4. Search Room**
+a. From the home page:
+    Select any date
+    Select 1 or 2
+    Select Regular
+b. Submit
+c. Scroll down to check results
 
 **5. View Room detail**
+a. Click a card from the results list, this will take the user to the details
+page of that specific room
 
 **6. Book room**
+To book a room, the user must be logged in. However, the user could select the room first before booking.
+If the user is not logged in, the user would be prompted to login.
+a. From the results, open a card and then click the book button.
+b. Also, the user could directly click the book button on the card without opening it.
+c. Click submit to finalize the booking process
+
 
 **7. View Reservation**
+To view a reservation, the user must be logged in.
+a. Open the menu on the top right, and select "My reservations"
 
 **8. Cancel Reservation**
+To cancel a reservation, the user must be logged in.
+a. Open the menu on the top right, and select "My reservations"
+b. Click cancel on any of the reservations listed.
+
+
+* Some of these use cases do not have a well designed UI yet. However, the design is in progress.
 
 
