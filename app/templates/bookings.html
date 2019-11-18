@@ -4,7 +4,10 @@
 <h1>List of Bookings Page</h1>
 {% for reservation in reservations %}
 <p>
-    {{ reservation.id }} - {{ reservation.check_in_date }} - {{ reservation.check_out_date }}
+    Rerservation ID:{{ reservation.id }} <br />
+    Room ID: {{ reservation.room.id }} <br />
+    Check In Date{{ reservation.check_in_date }} <br />
+    Check Out Date{{ reservation.check_out_date }} <br />
     <a href="{{ url_for('cancel_reservation', res_id=reservation.id) }}"> Cancel</a>
 </p>
 {% endfor %}
