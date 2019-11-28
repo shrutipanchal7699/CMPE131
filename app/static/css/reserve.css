@@ -6,7 +6,7 @@
 }
 
 #reserve-main-div > #reserve-detail-div {
-    padding: 6em;
+    padding: 3em;
     width: 40em;
     background-color: rgb(235, 235, 235);
     border-radius: 4px;
@@ -36,6 +36,11 @@
     justify-content: space-between;
 }
 
+#reserve-main-div > #reserve-detail-div > form {
+    display: flex;
+    justify-content: center;
+}
+
 #reserve-main-div > #reserve-detail-div > form > .reserve-book-button {
     all: unset;
     display: flex;
@@ -44,7 +49,7 @@
     border-radius: 4px;
     padding: 0.1em 1em 0.1em 1em;
     justify-content: center;
-    margin-top: 1em;
+    margin: 0.5em;
     cursor: pointer;
 
     background-color: rgb(235, 235, 235);
@@ -54,6 +59,36 @@
 }
 
 #reserve-main-div > #reserve-detail-div > form > .reserve-book-button:hover {
+    background-color: rgb(80, 82, 95);
+    color: white;
+
+    transition: background-color 0.25s, color 0.25s;
+    -webkit-transition: background-color 0.25s, color 0.25s;
+}
+
+#payment-method-modal > form {
+    display: flex;
+    flex-direction: column;
+}
+
+#payment-method-modal > form > .payment-method-button {
+    all: unset;
+    display: flex;
+    font-size: 2em;
+    border: 1px solid black;
+    border-radius: 4px;
+    padding: 0.1em 1em 0.1em 1em;
+    justify-content: center;
+    margin: 0.5em;
+    cursor: pointer;
+
+    background-color: rgb(235, 235, 235);
+
+    transition: background-color 0.25s, color 0.25s;
+    -webkit-transition: background-color 0.25s, color 0.25s;
+}
+
+#payment-method-modal > form > .payment-method-button:hover {
     background-color: rgb(80, 82, 95);
     color: white;
 
