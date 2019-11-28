@@ -1,9 +1,14 @@
 {%extends 'base.html'%}
 
+{% block statics %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+{% endblock %}
+
 {% block body %}
 {% from "_formhelpers.html" import render_field %}
 
-<h1>Profile settings Page</h1>
+<!-- <h1>User Name</h1>
 
 <h2>Update password</h2>
 <form action="{{ url_for('update_password') }}" method="POST">
@@ -20,6 +25,64 @@
     {{render_field(delete_form.password)}}
     {{render_field(delete_form.confirm)}}
     <input type="submit" value="Submit" />
-</form>
+</form> -->
+
+<div id="profile-main-div" class="flex-viewport-div">
+        <div id="profile-options-container">
+            <img src="{{ url_for('static', filename='images/profiles/sample-profile.jpg') }}" class="profile-user-profile"/>
+            <h2 style="color:rgb(71, 74, 76); margin-bottom: 1em;">Waffle</h2>
+            <div class="accordion" id="profile-options">
+                <div class="card">
+                    <div data-toggle="collapse" data-target="#change-pass-collapse" aria-expanded="true" aria-controls="change-pass-collapse" class="accordion-card-label-div">
+                        Change Password
+                    </div>
+                    <div id="change-pass-collapse" class="collapse" aria-labelledby="headingOne" data-parent="#profile-options">
+                        <div class="card-body">
+                            <form action="{{ url_for('update_password') }}" method="POST" class="login-signup-form">
+                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                                <input type="password" name="newpassword" class="profile-options-input" placeholder="New Password"/>
+                                <input type="password" name="oldpassword" class="profile-options-input" placeholder="Old Password"/>
+                                <input type="password" name="oldpasswordconfirm" class="profile-options-input" placeholder="Repeat Old Password"/>
+                                <input type="submit" class="profile-options-input" value="Submit"/>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div data-toggle="collapse" data-target="#payment-method-collapse" aria-expanded="false" aria-controls="payment-method-collapse" class="accordion-card-label-div">
+                        Payment Methods
+                    </div>
+                    <div id="payment-method-collapse" class="collapse" aria-labelledby="headingTwo" data-parent="#profile-options">
+                        <div class="card-body">
+                            <form action="", method="POST">
+                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                                <input type="submit" class="profile-options-input" value="●●●● ●●●● ●●●● 0192"/>
+                                <input type="submit" class="profile-options-input" value="●●●● ●●●● ●●●● 7930"/>
+                                <label style="margin-left: 1em;">Add new payment method</label>
+                                <input type="text" name="nameoncard" class="profile-options-input" placeholder="Name on card"/>
+                                <input type="text" name="cardnumber" class="profile-options-input" placeholder="Card number"/>
+                                <input type="submit" class="profile-options-input" value="Add payment method"/>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div data-toggle="collapse" data-target="#delete-acc-collapse" aria-expanded="false" aria-controls="delete-acc-collapse" class="accordion-card-label-div">
+                        Delete Account
+                    </div>
+                    <div id="delete-acc-collapse" class="collapse" aria-labelledby="headingTwo" data-parent="#profile-options">
+                        <div class="card-body">
+                            <form action="{{ url_for('delete_account') }}", method="POST">
+                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                                <input type="password" name="password" class="profile-options-input" placeholder="Password"/>
+                                <input type="password" name="confirm" class="profile-options-input" placeholder="Repeat Password"/>
+                                <input type="submit" class="profile-options-input" value="Delete Account"/>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 {% endblock %}
