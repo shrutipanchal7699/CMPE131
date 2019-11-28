@@ -124,7 +124,8 @@ def configure_routes(app):
     # displays the details of different rooms
     @app.route('/rooms/<id>')
     def room_detail_page(id):
-        return render_template('roomDetail.html')
+        room = Room.get_by_id(id)
+        return render_template('roomDetail.html', room=room)
 
     #for user reservation
     @app.route('/rooms/<id>/book', methods=['GET', 'POST'])
