@@ -40,9 +40,9 @@
                         <div class="card-body">
                             <form action="{{ url_for('update_password') }}" method="POST" class="login-signup-form">
                                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-                                <input type="password" name="newpassword" class="profile-options-input" placeholder="New Password"/>
-                                <input type="password" name="oldpassword" class="profile-options-input" placeholder="Old Password"/>
-                                <input type="password" name="oldpasswordconfirm" class="profile-options-input" placeholder="Repeat Old Password"/>
+                                <input type="password" name="new_password" class="profile-options-input" placeholder="New Password"/>
+                                <input type="password" name="password" class="profile-options-input" placeholder="Old Password"/>
+                                <input type="password" name="confirm" class="profile-options-input" placeholder="Repeat Old Password"/>
                                 <input type="submit" class="profile-options-input" value="Submit"/>
                             </form>
                         </div>

@@ -52,3 +52,8 @@
 .login-form-input-invalid, input:invalid {
     border: 3px solid rgb(255, 106, 106);
 }
+
+.alert-message {
+    margin-left: 1em;
+    color: rgb(255, 88, 88);
+}

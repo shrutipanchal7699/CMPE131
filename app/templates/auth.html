@@ -22,7 +22,7 @@
                     <div class="card-body">
                         <form method="POST" action="{{ url_for('login') }}" class="login-signup-form">
                             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-                            <input type="email" name="email" class="login-form-input login-form-input-invalid" placeholder="Email"/>
+                            <input type="email" name="email" class="login-form-input" placeholder="Email"/>
                             <input type="password" name="password" class="login-form-input" placeholder="Password"/>
                             {{ render_error('login_password') }}
                             <input type="submit" class="login-form-input" value="Login"/>
