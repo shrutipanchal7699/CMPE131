@@ -54,6 +54,10 @@
     border: 1px solid rgb(228, 228, 228);
 }
 
+.text-align-center {
+    text-align: center;
+}
+
 .profile-options-input-invalid, input:invalid {
     border: 3px solid rgb(255, 106, 106);
 }

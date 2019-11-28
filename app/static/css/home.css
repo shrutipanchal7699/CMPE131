@@ -85,3 +85,10 @@ body {
     transition: background-color 0.25s, color 0.25s;
     -webkit-transition: background-color 0.25s, color 0.25s;
 }
+
+#menu-icon {
+    border-radius: 50%;
+    width: 2em;
+    height: 2em;
+    object-fit: cover;
+}

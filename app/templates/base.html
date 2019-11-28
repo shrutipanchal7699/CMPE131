@@ -33,7 +33,11 @@
     <div id="account-button" class="btn-group dropleft">
         <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
             aria-expanded="false">
-            Menu
+            {% if current_user.is_authenticated %}
+            <img id="menu-icon" src="{{ url_for('static', filename='images/profiles/sample-profile.jpg') }}"/>
+            {% else %}
+            <img id="menu-icon" src="{{ url_for('static', filename='images/default-avatar.png') }}"/>
+            {% endif %}
         </button>
         <div class="dropdown-menu">
             {% block dropdown %}
@@ -45,6 +49,7 @@
             <a class="dropdown-item" href="{{ url_for('auth_page') }}">Login or Register</a>
             {% endif %}
             <a class="dropdown-item" href="{{ url_for('room_list_page') }}">View available rooms</a>
+            <a class="dropdown-item" href="">Contact Us</a>
             {% endblock %}
         </div>
     </div>
