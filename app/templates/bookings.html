@@ -1,14 +1,83 @@
 {% extends 'base.html' %}
 
+{% block statics %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/bookings.css') }}">
+{% endblock %}
+
 {% block body %}
-<h1>List of Bookings Page</h1>
+<h1 id="page-title">My Reservations</h1>
+<div id="room-search-results-main">
 {% for reservation in reservations %}
-<p>
-    Rerservation ID:{{ reservation.id }} <br />
-    Room ID: {{ reservation.room.id }} <br />
-    Check In Date{{ reservation.check_in_date }} <br />
-    Check Out Date{{ reservation.check_out_date }} <br />
-    <a href="{{ url_for('cancel_reservation', res_id=reservation.id) }}"> Cancel</a>
-</p>
+    <div class="room-search-card" data-toggle="modal" data-target=".reservation-{{ reservation.id }}">
+        <div class="image-div">
+            <img class="room-image" src="../static/images/rooms/regular/1.jpg">
+        </div>
+        <div class="search-item-brief-details">
+            <h1>{{ reservation.room.room_type }}</h1>
+            <h4>{{ reservation.room.accomodations }}</h4>
+            <p>Room#: 308</p>
+            <p>Check In Date: {{ reservation.check_in_date }}</p>
+            <p>Check Out Date: {{ reservation.check_out_date }}</p>
+        </div>
+        <div class="book-button-div">
+            <a href="{{ url_for('cancel_reservation', res_id=reservation.id) }}">
+                <img id="cancel-reservation-button" src="{{ url_for('static', filename='images/cancel.png') }}"/>
+            </a>
+        </div>
+    </div>
+    <div class="modal fade reservation-{{ reservation.id }}" id="reservation-{{ reservation.id }}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content reservation-modal-content">
+                <h2 style="text-align: center; margin-bottom: 1em;">Thank you for staying with us!</h2>
+                <h4 style="text-align: center; margin-bottom: 2em">Booking summary</h4>
+                <div class="booking-details">
+                    <div class="booking-detail">
+                        <p>Room#</p>
+                        <p>308</p>
+                    </div>
+                </div>
+                <div class="booking-details">
+                    <div class="booking-detail">
+                        <p>Floor</p>
+                        <p>3</p>
+                    </div>
+                </div>
+                <div class="booking-details">
+                    <div class="booking-detail">
+                        <p>Parking Spot</p>
+                        <p>B 10</p>
+                    </div>
+                </div>
+                <div class="booking-details">
+                    <div class="booking-detail">
+                        <p>Dates</p>
+                        <p>{{reservation.check_in_date}} - {{reservation.check_out_date}}</p>
+                    </div>
+                </div>
+                <div class="booking-details">
+                    <div class="booking-detail">
+                        <p>Check-in Time</p>
+                        <p>3:00pm</p>
+                    </div>
+                </div>
+                <div class="booking-details">
+                    <div class="booking-detail">
+                        <p>Check-out Time</p>
+                        <p>1:00pm</p>
+                    </div>
+                </div>
+                <div class="booking-barcode-div">
+                    <img class="booking-barcode" src="{{ url_for('static', filename='images/qr_code.png') }}"/>
+                </div>
+                <div class="booking-details">
+                    <div class="booking-detail" style="width: 14em; text-align: center;">
+                        <p>Let hotel representative scan this QR code to get the keycard for your room</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endfor %}
+</div>
 {% endblock %}
