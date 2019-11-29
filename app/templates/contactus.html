@@ -14,14 +14,56 @@
     </div>
     <div id="email-form-container">
         <form id="email-form">
-            <h1>Contact us</h1>
-            <input type="email" class="invalid" placeholder="Email"/>
-            <input type="text" placeholder="Subject"/>
-            <textarea type="text" placeholder="Message"></textarea>
-            <input type="submit" value="Submit">
+            <h1 id="contact-us">Contact us</h1>
+            <input id="input-email" type="email" class="invalid" placeholder="Email"/>
+            <input id="input-subject" type="text" placeholder="Subject"/>
+            <textarea id="textarea-message" type="text" placeholder="Message"></textarea>
+            <input id="contact-us-submit" type="submit" value="Submit">
         </form>
         <p>hotelcallisto@callisto.com</p>
     </div>
 </div>
+
+<script>
+    var en_us = {
+        contactus: "Contact us",
+        inputemail: "Email",
+        inputsubject: "Subject",
+        textareamessage: "Message",
+        contactussubmit: "Submit",
+    }
+
+    var es_es = {
+        contactus: "Contácte con nosotros",
+        inputemail: "Dirección electrónica",
+        inputsubject: "Tema",
+        textareamessage: "Mensaje",
+        contactussubmit: "Enviar",
+    }
+
+    var lang
+
+    switch (sessionStorage.getItem("weblang")) {
+        case "en_us":
+            lang = en_us
+            $("#us-flag-icon").addClass("selected");
+            break;
+        case "es_es":
+            lang = es_es
+            $("#es-flag-icon").addClass("selected");
+            break;
+        default:
+            lang = en_us
+            $("#us-flag-icon").addClass("selected");
+            break;
+    }
+
+    document.getElementById("contact-us").innerHTML = lang.contactus;
+    document.getElementById("input-email").placeholder = lang.inputemail;
+    document.getElementById("input-subject").placeholder = lang.inputsubject;
+    document.getElementById("textarea-message").placeholder = lang.textareamessage;
+    document.getElementById("contact-us-submit").value = lang.contactussubmit;
+
+</script>
 
 {% endblock %}

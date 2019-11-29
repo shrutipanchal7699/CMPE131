@@ -52,11 +52,29 @@
             <a class="dropdown-item" href="{{ url_for('contact_us') }}">Contact Us</a>
             {% endblock %}
         </div>
+        <div id="language-selection-div">
+            <img id="us-flag-icon" class="flag-icons" src="{{ url_for('static', filename='images/us_flag_icon.png') }}"/>
+            <img id="es-flag-icon" class="flag-icons" src="{{ url_for('static', filename='images/es_flag_icon.png') }}"/>
+        </div>
     </div>
 
     {% block body %}
     {% endblock %}
 
+    <script>
+        $(document).ready(function() {
+
+            $("#us-flag-icon").click(function() {
+                sessionStorage.setItem("weblang", "en_us");
+                location.reload()
+            })
+
+            $("#es-flag-icon").click(function() {
+                sessionStorage.setItem("weblang", "es_es");
+                location.reload()
+            })
+        })
+    </script>
 </body>
 
 </html>

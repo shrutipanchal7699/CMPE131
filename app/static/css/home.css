@@ -22,11 +22,32 @@ body {
 }
 
 #account-button {
+    display: flex;
     position: fixed;
     top: 2em;
     right: 2em;
+}
+
+#account-button > button {
     -webkit-box-shadow: 15px 16px 15px -15px rgba(35,83,127,0.6); 
     box-shadow: 15px 16px 15px -15px rgba(35,83,127,0.6);
+}
+
+#language-selection-div {
+    padding: 0.3em;
+    margin-left: 0.3em;
+}
+
+.flag-icons {
+    border-radius: 50%;
+    height: 2em;
+    width: 2em;
+    margin: 0.1em;
+    cursor: pointer;
+}
+
+#language-selection-div > .selected {
+    border: 2px solid gray;
 }
 
 #room-search-form-container {
