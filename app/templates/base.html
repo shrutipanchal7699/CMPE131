@@ -49,7 +49,7 @@
             <a class="dropdown-item" href="{{ url_for('auth_page') }}">Login or Register</a>
             {% endif %}
             <a class="dropdown-item" href="{{ url_for('room_list_page') }}">View available rooms</a>
-            <a class="dropdown-item" href="">Contact Us</a>
+            <a class="dropdown-item" href="{{ url_for('contact_us') }}">Contact Us</a>
             {% endblock %}
         </div>
     </div>

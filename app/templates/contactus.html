@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block statics %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/contactus.css') }}">
+{% endblock %}
+
+{% block body %}
+{% from "_formhelpers.html" import render_field %}
+
+<div id="contact-us-page-main-div" class="flex-viewport-div">
+    <div id="image-container">
+
+    </div>
+    <div id="email-form-container">
+        <form id="email-form">
+            <h1>Contact us</h1>
+            <input type="email" class="invalid" placeholder="Email"/>
+            <input type="text" placeholder="Subject"/>
+            <textarea type="text" placeholder="Message"></textarea>
+            <input type="submit" value="Submit">
+        </form>
+        <p>hotelcallisto@callisto.com</p>
+    </div>
+</div>
+
+{% endblock %}

@@ -94,6 +94,12 @@ def configure_routes(app):
         if current_user.is_authenticated:
             logout_user()
         return redirect(url_for('auth_page'))
+    
+    #ContactUs Page
+    @app.route('/contactus')
+    def contact_us():
+        return render_template('contactus.html')
+    
 
     #displays list of rooms to the user
     @app.route('/rooms')
