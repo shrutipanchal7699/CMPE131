@@ -22,6 +22,8 @@
         });
 
         $('#room-search-form').submit(function (e) {
+
+            var scrollTo = document.getElementById("room-search-results-main")
             e.preventDefault();
             const url = $(this).attr('action');
             const formData = new FormData(this);
@@ -41,6 +43,10 @@
             }).done(data => {
                 $('#room-search-results-main').html(data)
             })
+
+            setTimeout(function() {
+                scrollTo.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"});
+            }, 500);
         })
     })
 </script>
