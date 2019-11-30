@@ -28,61 +28,143 @@
 </form> -->
 
 <div id="profile-main-div" class="flex-viewport-div">
-        <div id="profile-options-container">
-            <img src="{{ url_for('static', filename='images/profiles/sample-profile.jpg') }}" class="profile-user-profile"/>
-            <h2 style="color:rgb(71, 74, 76); margin-bottom: 1em;">Waffle</h2>
-            <div class="accordion" id="profile-options">
-                <div class="card">
-                    <div data-toggle="collapse" data-target="#change-pass-collapse" aria-expanded="true" aria-controls="change-pass-collapse" class="accordion-card-label-div">
-                        Change Password
-                    </div>
-                    <div id="change-pass-collapse" class="collapse" aria-labelledby="headingOne" data-parent="#profile-options">
-                        <div class="card-body">
-                            <form action="{{ url_for('update_password') }}" method="POST" class="login-signup-form">
-                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-                                <input type="password" name="new_password" class="profile-options-input" placeholder="New Password"/>
-                                <input type="password" name="password" class="profile-options-input" placeholder="Old Password"/>
-                                <input type="password" name="confirm" class="profile-options-input" placeholder="Repeat Old Password"/>
-                                <input type="submit" class="profile-options-input" value="Submit"/>
-                            </form>
-                        </div>
+    <div id="profile-options-container">
+        <img src="{{ url_for('static', filename='images/profiles/sample-profile.jpg') }}" class="profile-user-profile"/>
+        <h2 style="color:rgb(71, 74, 76); margin-bottom: 1em;">Waffle</h2>
+        <div class="accordion" id="profile-options">
+            <div class="card">
+                <div id="profile-changepassword" data-toggle="collapse" data-target="#change-pass-collapse" aria-expanded="true" aria-controls="change-pass-collapse" class="accordion-card-label-div">
+                    Change Password
+                </div>
+                <div id="change-pass-collapse" class="collapse" aria-labelledby="headingOne" data-parent="#profile-options">
+                    <div class="card-body">
+                        <form action="{{ url_for('update_password') }}" method="POST" class="login-signup-form">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                            <input id="profile-cpnewpassword" type="password" name="new_password" class="profile-options-input" placeholder="New password"/>
+                            <input id="profile-cpoldpassword" type="password" name="password" class="profile-options-input" placeholder="Old password"/>
+                            <input id="profile-cprepoldpassword" type="password" name="confirm" class="profile-options-input" placeholder="Repeat old password"/>
+                            <input id="profile-cpsubmit" type="submit" class="profile-options-input" value="Change password"/>
+                        </form>
                     </div>
                 </div>
-                <div class="card">
-                    <div data-toggle="collapse" data-target="#payment-method-collapse" aria-expanded="false" aria-controls="payment-method-collapse" class="accordion-card-label-div">
-                        Payment Methods
-                    </div>
-                    <div id="payment-method-collapse" class="collapse" aria-labelledby="headingTwo" data-parent="#profile-options">
-                        <div class="card-body">
-                            <form action="", method="POST">
-                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-                                <label class="profile-options-input text-align-center">●●●● ●●●● ●●●● 0192</label>
-                                <label class="profile-options-input text-align-center">●●●● ●●●● ●●●● 7930</label>
-                                <label style="margin-left: 1em;">Add new payment method</label>
-                                <input type="text" name="nameoncard" class="profile-options-input" placeholder="Name on card"/>
-                                <input type="text" name="cardnumber" class="profile-options-input" placeholder="Card number"/>
-                                <input type="submit" class="profile-options-input" value="Add payment method"/>
-                            </form>
-                        </div>
+            </div>
+            <div class="card">
+                <div id="profile-paymentmethods" data-toggle="collapse" data-target="#payment-method-collapse" aria-expanded="false" aria-controls="payment-method-collapse" class="accordion-card-label-div">
+                    Payment Methods
+                </div>
+                <div id="payment-method-collapse" class="collapse" aria-labelledby="headingTwo" data-parent="#profile-options">
+                    <div class="card-body">
+                        <form action="", method="POST">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                            <label class="profile-options-input text-align-center">●●●● ●●●● ●●●● 0192</label>
+                            <label class="profile-options-input text-align-center">●●●● ●●●● ●●●● 7930</label>
+                            <label id="profile-addpaymentmethod" style="margin-left: 1em;">Add new payment method</label>
+                            <input id="profile-nameoncard" type="text" name="nameoncard" class="profile-options-input" placeholder="Name on card"/>
+                            <input id="profile-cardnumber" type="text" name="cardnumber" class="profile-options-input" placeholder="Card number"/>
+                            <input id="profile-pmsubmit"type="submit" class="profile-options-input" value="Add payment method"/>
+                        </form>
                     </div>
                 </div>
-                <div class="card">
-                    <div data-toggle="collapse" data-target="#delete-acc-collapse" aria-expanded="false" aria-controls="delete-acc-collapse" class="accordion-card-label-div">
-                        Delete Account
-                    </div>
-                    <div id="delete-acc-collapse" class="collapse" aria-labelledby="headingTwo" data-parent="#profile-options">
-                        <div class="card-body">
-                            <form action="{{ url_for('delete_account') }}", method="POST">
-                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-                                <input type="password" name="password" class="profile-options-input" placeholder="Password"/>
-                                <input type="password" name="confirm" class="profile-options-input" placeholder="Repeat Password"/>
-                                <input type="submit" class="profile-options-input" value="Delete Account"/>
-                            </form>
-                        </div>
+            </div>
+            <div class="card">
+                <div id="profile-deleteaccount" data-toggle="collapse" data-target="#delete-acc-collapse" aria-expanded="false" aria-controls="delete-acc-collapse" class="accordion-card-label-div">
+                    Delete Account
+                </div>
+                <div id="delete-acc-collapse" class="collapse" aria-labelledby="headingTwo" data-parent="#profile-options">
+                    <div class="card-body">
+                        <form action="{{ url_for('delete_account') }}", method="POST">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                            <input id="profile-dapassword" type="password" name="password" class="profile-options-input" placeholder="Password"/>
+                            <input id="profile-dareppassword" type="password" name="confirm" class="profile-options-input" placeholder="Repeat password"/>
+                            <input id="profile-dasubmit" type="submit" class="profile-options-input" value="Delete Account"/>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
+<script>
+    function changePageLanguage() {
+        var en_us = {
+
+            changepassword: "Change Password",
+            cpnewpassword: "New password",
+            cpoldpassword: "Old password",
+            cprepoldpassword: "Repeat old password",
+            cpsubmit: "Change password",
+
+            paymentmethods: "Payment Methods",
+            addpaymentmethod: "Add new payment method",
+            nameoncard: "Name on card",
+            cardnumber: "Card number",
+            pmsubmit: "Add payment method",
+
+            deleteaccount: "Delete Account",
+            dapassword: "Password",
+            dareppassword: "Repeat password",
+            dasubmit: "Delete Account",
+
+        }
+
+        var es_es = {
+            changepassword: "Cambiar contraseña",
+            cpnewpassword: "Nueva contraseña",
+            cpoldpassword: "Contraseña antigua",
+            cprepoldpassword: "Repetir contraseña antigua",
+            cpsubmit: "Cambiar contraseña",
+
+            paymentmethods: "Formas de Pago",
+            addpaymentmethod: "Agregar método de pago",
+            nameoncard: "Nombre en la tarjeta",
+            cardnumber: "Numero de tarjeta",
+            pmsubmit: "Agregar método de pago",
+
+            deleteaccount: "Eliminar Cuenta",
+            dapassword: "Contraseña",
+            dareppassword: "Repetir contraseña",
+            dasubmit: "Eliminar cuenta",
+        }
+
+        var lang
+
+        switch (sessionStorage.getItem("weblang")) {
+            case "en_us":
+                lang = en_us
+                $("#us-flag-icon").addClass("selected");
+                $("#es-flag-icon").removeClass("selected");
+                break;
+            case "es_es":
+                lang = es_es
+                $("#es-flag-icon").addClass("selected");
+                $("#us-flag-icon").removeClass("selected");
+                break;
+            default:
+                lang = en_us
+                $("#us-flag-icon").addClass("selected");
+                $("#es-flag-icon").removeClass("selected");
+                break;
+        }
+
+        changeInnerHTML("profile-changepassword", lang.changepassword);
+        changePlaceholder("profile-cpnewpassword", lang.cpnewpassword);
+        changePlaceholder("profile-cpoldpassword", lang.cpoldpassword);
+        changePlaceholder("profile-cprepoldpassword", lang.cprepoldpassword);
+        changeValue("profile-cpsubmit", lang.cpsubmit);
+
+        changeInnerHTML("profile-paymentmethods", lang.paymentmethods);
+        changeInnerHTML("profile-addpaymentmethod", lang.addpaymentmethod);
+        changePlaceholder("profile-nameoncard", lang.nameoncard);
+        changePlaceholder("profile-cardnumber", lang.cardnumber);
+        changeValue("profile-pmsubmit", lang.pmsubmit);
+
+        changeInnerHTML("profile-deleteaccount", lang.deleteaccount);
+        changePlaceholder("profile-dapassword", lang.dapassword);
+        changePlaceholder("profile-dareppassword", lang.dareppassword);
+        changeValue("profile-dasubmit", lang.dasubmit);
+
+
+    }
+</script>
 {% endblock %}
