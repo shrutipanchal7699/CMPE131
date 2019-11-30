@@ -27,42 +27,42 @@
             <li>Hot Tub</li>
         </ul>
         <div id="booking-summary-div">
-            <h4>Booking Summary</h4>
+            <h4 id="reserve-detail-summary">Booking Summary</h4>
             <div class="booking-info-item">
-                <p>Room#</p>
+                <p id="reserve-detail-roomnumber">Room#</p>
                 <p>{{room.id}}</p>
             </div>
             <div class="booking-info-item">
-                <p>Floor</p>
+                <p id="reserve-detail-floor">Floor</p>
                 <p>3</p>
             </div>
             <div class="booking-info-item">
-                <p>Number of people</p>
+                <p id="reserve-detail-guests">Guests</p>
                 <p>{{num_occupants}}</p>
             </div>
             <div class="booking-info-item">
-                <p>Dates</p>
+                <p id="reserve-detail-dates">Dates</p>
                 <p>{{check_in_date}} - {{check_out_date}}</p>
             </div>
         </div>
 
         <div id="cost-summary-div">
-            <h4>Cost Summary</h4>
+            <h4 id="reserve-detail-cost">Cost Summary</h4>
             <div class="cost-info-item">
-                <p>Rate</p>
+                <p id="reserve-detail-rate">Rate</p>
                 <p>{{room.price}}</p>
             </div>
             <div class="cost-info-item">
-                <p>Local Fee</p>
+                <p id="reserve-detail-localfee">Local Fee</p>
                 <p>$0.00</p>
             </div>
             <div class="cost-info-item">
-                <p>Estimated government taxes and fees</p>
+                <p id="reserve-detail-taxes">Estimated government taxes and fees</p>
                 <p>$0</p>
             </div>
             <hr/>
             <div class="cost-info-item">
-                <h4>Total</h4>
+                <h4 id="reserve-detail-total">Total</h4>
                 <h4>${{room.price}}</h4>
             </div>
         </div>
@@ -73,7 +73,7 @@
             <input type="hidden" name="check_out_date" value="{{check_out_date}}" />
             <input type="hidden" name="num_occupants" value="{{num_occupants}}" />
             <input type="button" value="+" class="reserve-book-button" data-toggle="modal" data-target="#exampleModalCenter"/>
-            <input type="submit" class="reserve-book-button" value="Book" />
+            <input id="reserve-detail-book" type="submit" class="reserve-book-button" value="Book" />
         </form>
     </div>
 </div>
@@ -97,5 +97,68 @@
         </div>
     </div>
 </div>
+
+<script>
+    function changePageLanguage() {
+        var en_us = {
+            summary: "Booking summary",
+            roomnumber: "Room#:",
+            floor: "Floor",
+            guests: "Guests",
+            dates: "Dates",
+            cost: "Cost Summary",
+            rate: "Rate",
+            localfee: "Local Fee",
+            taxes: "Estimated government taxes and fees",
+            book: "Book"
+        }
+
+        var es_es = {
+            summary: "Resumen de la reserva",
+            roomnumber: "Número de habitación:",
+            floor: "Piso",
+            guests: "Huéspedes",
+            dates: "Fetchas",
+            cost: "Resumen de costos",
+            rate: "Precio",
+            localfee: "Tarifa local",
+            taxes: "Impuestos y tasas gubernamentales estimados",
+            book: "Reservar"
+        }
+
+        var lang
+
+        switch (sessionStorage.getItem("weblang")) {
+            case "en_us":
+                lang = en_us
+                $("#us-flag-icon").addClass("selected");
+                $("#es-flag-icon").removeClass("selected");
+                break;
+            case "es_es":
+                lang = es_es
+                $("#es-flag-icon").addClass("selected");
+                $("#us-flag-icon").removeClass("selected");
+                break;
+            default:
+                lang = en_us
+                $("#us-flag-icon").addClass("selected");
+                $("#es-flag-icon").removeClass("selected");
+                break;
+        }
+
+        changeInnerHTML("reserve-detail-summary", lang.summary);
+        changeInnerHTML("reserve-detail-roomnumber", lang.roomnumber);
+        changeInnerHTML("reserve-detail-floor", lang.floor);
+        changeInnerHTML("reserve-detail-guests", lang.guests);
+        changeInnerHTML("reserve-detail-dates", lang.dates);
+        changeInnerHTML("reserve-detail-cost", lang.cost);
+        changeInnerHTML("reserve-detail-rate", lang.rate);
+        changeInnerHTML("reserve-detail-localfee", lang.localfee);
+        changeInnerHTML("reserve-detail-taxes", lang.taxes);
+        changeValue("reserve-detail-book", lang.book);
+
+
+    }
+</script>
 
 {% endblock %}
