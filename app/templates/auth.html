@@ -15,35 +15,35 @@
     <div id="login-signup-switch-container">
         <div class="accordion" id="login-signup-switch">
             <div class="card">
-                <div data-toggle="collapse" data-target="#login-collapse" aria-expanded="true" aria-controls="login-collapse" class="accordion-card-label-div">
+                <div id="login-header" data-toggle="collapse" data-target="#login-collapse" aria-expanded="true" aria-controls="login-collapse" class="accordion-card-label-div">
                     Login
                 </div>
                 <div id="login-collapse" class="{{login_collapse}}" aria-labelledby="headingOne" data-parent="#login-signup-switch">
                     <div class="card-body">
                         <form method="POST" action="{{ url_for('login') }}" class="login-signup-form">
                             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-                            <input type="email" name="email" class="login-form-input" placeholder="Email"/>
-                            <input type="password" name="password" class="login-form-input" placeholder="Password"/>
+                            <input id="login-email-input" type="email" name="email" class="login-form-input" placeholder="Email"/>
+                            <input id="login-password-input" type="password" name="password" class="login-form-input" placeholder="Password"/>
                             {{ render_error('login_password') }}
-                            <input type="submit" class="login-form-input" value="Login"/>
+                            <input id="login-submit" type="submit" class="login-form-input" value="Login"/>
                         </form>
                     </div>
                 </div>
             </div>
             <div class="card">
-                <div data-toggle="collapse" data-target="#signup-collapse" aria-expanded="false" aria-controls="signup-collapse" class="accordion-card-label-div">
+                <div id="signup-header" data-toggle="collapse" data-target="#signup-collapse" aria-expanded="false" aria-controls="signup-collapse" class="accordion-card-label-div">
                     Signup
                 </div>
                 <div id="signup-collapse" class="{{register_collapse}}" aria-labelledby="headingTwo" data-parent="#login-signup-switch">
                 <div class="card-body">
                         <form method="POST" action="{{ url_for('register') }}" class="login-signup-form">
                             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-                            <input type="email" name="email" class="login-form-input" placeholder="Email"/>
+                            <input id="signup-email-input" type="email" name="email" class="login-form-input" placeholder="Email"/>
                             {{ render_error('register_email') }}
-                            <input type="password" name="password" class="login-form-input" placeholder="Password"/>
+                            <input id="signup-password-input" type="password" name="password" class="login-form-input" placeholder="Password"/>
                             {{ render_error('register_password') }}
-                            <input type="password" name="confirm" class="login-form-input" placeholder="Repeat Password"/>
-                            <input type="submit" class="login-form-input" value="Signup"/>
+                            <input id="signup-password-reinput" type="password" name="confirm" class="login-form-input" placeholder="Repeat Password"/>
+                            <input id="signup-submit" type="submit" class="login-form-input" value="Signup"/>
                         </form>
                 </div>
                 </div>
@@ -51,5 +51,68 @@
         </div>
     </div>
 </div>
+
+<script>
+    function changePageLanguage() {
+        var en_us = {
+            loginheader: "Login",
+            signupheader: "Signup",
+            loginemailinput: "Email",
+            loginpasswordinput: "Password",
+            loginsubmit: "Login",
+            signupemailinput: "Email",
+            signuppasswordinput: "Password",
+            signuppasswordreinput: "Repeat Password",
+            signupsubmit: "Signup",
+
+        }
+
+        var es_es = {
+            loginheader: "Iniciar sesión",
+            signupheader: "Registrar",
+            loginemailinput: "Dirección de correo electrónico",
+            loginpasswordinput: "Contraseña",
+            loginsubmit: "Iniciar sesión",
+            signupemailinput: "Dirección de correo electrónico",
+            signuppasswordinput: "Contraseña",
+            signuppasswordreinput: "Repetir contraseña",
+            signupsubmit: "Registrar",
+        }
+
+        var lang
+
+        switch (sessionStorage.getItem("weblang")) {
+            case "en_us":
+                lang = en_us
+                $("#us-flag-icon").addClass("selected");
+                $("#es-flag-icon").removeClass("selected");
+                break;
+            case "es_es":
+                lang = es_es
+                $("#es-flag-icon").addClass("selected");
+                $("#us-flag-icon").removeClass("selected");
+                break;
+            default:
+                lang = en_us
+                $("#us-flag-icon").addClass("selected");
+                $("#es-flag-icon").removeClass("selected");
+                break;
+        }
+
+        changeInnerHTML("login-header", lang.loginheader);
+        changeInnerHTML("signup-header", lang.signupheader);
+
+        changePlaceholder("login-email-input", lang.loginemailinput);
+        changePlaceholder("login-password-input", lang.loginpasswordinput);
+        changeValue("login-submit", lang.loginsubmit);
+
+        changePlaceholder("signup-email-input", lang.signupemailinput);
+        changePlaceholder("signup-password-input", lang.signuppasswordinput);
+        changePlaceholder("signup-password-reinput", lang.signuppasswordreinput);
+        changeValue("signup-submit", lang.signupsubmit);
+
+
+    }
+</script>
 
 {% endblock %}

@@ -89,6 +89,22 @@
             }
         }
 
+        function changeValue(id, newtext) {
+            var htmlelem = document.getElementById(id);
+
+            if (htmlelem) {
+                htmlelem.value = newtext;
+            }
+        }
+
+        function changePlaceholder(id, newtext) {
+            var htmlelem = document.getElementById(id);
+
+            if (htmlelem) {
+                htmlelem.placeholder = newtext;
+            }
+        }
+
         function changeBaseLanguage() {
             var en_us = {
                 logout: "Logout",
