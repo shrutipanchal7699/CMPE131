@@ -34,7 +34,7 @@
     </div>
     <div id="detail-div">
         <div class="details">
-            <h1>{{room.room_type}} Room, ${{room.price}}<span style="font-size:0.5em;">/night</span></h1>
+            <h1>{{room.room_type}} Room, ${{room.price}}<span id="detail-pernight" style="font-size:0.5em;">/night</span></h1>
             <h4>{{room.accomodation}}</h4>
             <p>In at lorem quam. Curabitur in massa tristique, laoreet quam in, mattis neque. Donec sagittis gravida ipsum sit amet consequat. Vivamus a efficitur sapien. Vestibulum in ultrices lorem. Integer ultricies ipsum et risus efficitur, vitae posuere nibh mollis. Vestibulum cursus elementum augue, a bibendum tellus eleifend a. Praesent viverra tortor sit amet varius ornare. Vivamus maximus neque id enim suscipit vestibulum.</p>
         </div>
@@ -50,7 +50,45 @@
             <li>Air Conditioning</li>
             <li>Hot Tub</li>
         </ul>
-        <a href="{{url_for('reserve_room_page', id=room.id)}}" class="detail-book-button">Book</a>
+        <a id="detail-bookbutton" href="{{url_for('reserve_room_page', id=room.id)}}" class="detail-book-button">Book</a>
     </div>
 </div>
+
+<script>
+    function changePageLanguage() {
+        var en_us = {
+            pernight: "/night",
+            bookbutton: "Book",
+        }
+
+        var es_es = {
+            pernight: "/noche",
+            bookbutton: "Reservar",
+        }
+
+        var lang
+
+        switch (sessionStorage.getItem("weblang")) {
+            case "en_us":
+                lang = en_us
+                $("#us-flag-icon").addClass("selected");
+                $("#es-flag-icon").removeClass("selected");
+                break;
+            case "es_es":
+                lang = es_es
+                $("#es-flag-icon").addClass("selected");
+                $("#us-flag-icon").removeClass("selected");
+                break;
+            default:
+                lang = en_us
+                $("#us-flag-icon").addClass("selected");
+                $("#es-flag-icon").removeClass("selected");
+                break;
+        }
+
+        changeInnerHTML("detail-pernight", lang.pernight);
+        changeInnerHTML("detail-bookbutton", lang.bookbutton);
+    }
+</script>
+
 {% endblock %}
