@@ -89,6 +89,16 @@
             }
         }
 
+        function changeInnerHTMLClass(cla, newtext) {
+            var htmlelems = document.getElementsByClassName(cla);
+
+            if (htmlelems) {
+                [].slice.call( htmlelems ).forEach(function ( htmlelem ) {
+                    htmlelem.innerHTML = newtext;
+                });
+            }
+        }
+
         function changeValue(id, newtext) {
             var htmlelem = document.getElementById(id);
 

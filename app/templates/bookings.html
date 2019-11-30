@@ -16,9 +16,9 @@
         <div class="search-item-brief-details">
             <h1>{{ reservation.room.room_type }}</h1>
             <h4>{{ reservation.room.accomodations }}</h4>
-            <p>Room#: 308</p>
-            <p>Check In Date: {{ reservation.check_in_date }}</p>
-            <p>Check Out Date: {{ reservation.check_out_date }}</p>
+            <p><span class="detail-room-number">Room#:</span> 308</p>
+            <p><span class="detail-checkindate">Check In Date:</span> {{ reservation.check_in_date }}</p>
+            <p><span class="detail-checkoutdate">Check Out Date:</span> {{ reservation.check_out_date }}</p>
         </div>
         <div class="book-button-div">
             <a href="{{ url_for('cancel_reservation', res_id=reservation.id) }}">
@@ -29,41 +29,41 @@
     <div class="modal fade reservation-{{ reservation.id }}" id="reservation-{{ reservation.id }}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content reservation-modal-content">
-                <h2 style="text-align: center; margin-bottom: 1em;">Thank you for staying with us!</h2>
-                <h4 style="text-align: center; margin-bottom: 2em">Booking summary</h4>
+                <h2 class="detail-thankyou" style="text-align: center; margin-bottom: 1em;">Thank you for staying with us!</h2>
+                <h4 class="detail-summary" style="text-align: center; margin-bottom: 2em">Booking summary</h4>
                 <div class="booking-details">
                     <div class="booking-detail">
-                        <p>Room#</p>
+                        <p class="detail-roomnumber" >Room#</p>
                         <p>308</p>
                     </div>
                 </div>
                 <div class="booking-details">
                     <div class="booking-detail">
-                        <p>Floor</p>
+                        <p class="detail-floor">Floor</p>
                         <p>3</p>
                     </div>
                 </div>
                 <div class="booking-details">
                     <div class="booking-detail">
-                        <p>Parking Spot</p>
+                        <p class="detail-parkingspot">Parking Spot</p>
                         <p>B 10</p>
                     </div>
                 </div>
                 <div class="booking-details">
                     <div class="booking-detail">
-                        <p>Dates</p>
+                        <p class="detail-dates">Dates</p>
                         <p>{{reservation.check_in_date}} - {{reservation.check_out_date}}</p>
                     </div>
                 </div>
                 <div class="booking-details">
                     <div class="booking-detail">
-                        <p>Check-in Time</p>
+                        <p class="detail-checkintime">Check-in Time</p>
                         <p>3:00pm</p>
                     </div>
                 </div>
                 <div class="booking-details">
                     <div class="booking-detail">
-                        <p>Check-out Time</p>
+                        <p class="detail-checkouttime">Check-out Time</p>
                         <p>1:00pm</p>
                     </div>
                 </div>
@@ -72,7 +72,7 @@
                 </div>
                 <div class="booking-details">
                     <div class="booking-detail" style="width: 14em; text-align: center;">
-                        <p>Let hotel representative scan this QR code to get the keycard for your room</p>
+                        <p class="detail-scancode">Let hotel representative scan this QR code to get the keycard for your room</p>
                     </div>
                 </div>
             </div>
@@ -80,4 +80,73 @@
     </div>
 {% endfor %}
 </div>
+<script>
+    function changePageLanguage() {
+        var en_us = {
+            myreservations: "My Reservations",
+            thankyou: "Thank you for staying with us!",
+            summary: "Booking summary",
+            roomnumber: "Room#:",
+            checkindate: "Check In Date:",
+            checkoutdate: "Check Out Date:",
+            floor: "Floor",
+            parkingspot: "Parking Spot",
+            dates: "Dates",
+            checkintime: "Check-in Time",
+            checkouttime: "Check-out Time",
+            scancode: "Let a hotel representative scan this QR code to get the keycard for your room",
+        }
+
+        var es_es = {
+            myreservations: "Mis Reservas",
+            thankyou: "Gracias por quedarse con nosotros!",
+            summary: "Resumen de la reserva",
+            roomnumber: "Número de habitación:",
+            checkindate: "Fecha de check-in:",
+            checkoutdate: "Fecha de check-out:",
+            floor: "Piso",
+            parkingspot: "Estacionamiento",
+            dates: "Fetchas",
+            checkintime: "Hora de check-in",
+            checkouttime: "Hora de check-out",
+            scancode: "Deje que un representante del hotel escanee este código QR para obtener la tarjeta de acceso para su habitación.",
+        }
+
+        var lang
+
+        switch (sessionStorage.getItem("weblang")) {
+            case "en_us":
+                lang = en_us
+                $("#us-flag-icon").addClass("selected");
+                $("#es-flag-icon").removeClass("selected");
+                break;
+            case "es_es":
+                lang = es_es
+                $("#es-flag-icon").addClass("selected");
+                $("#us-flag-icon").removeClass("selected");
+                break;
+            default:
+                lang = en_us
+                $("#us-flag-icon").addClass("selected");
+                $("#es-flag-icon").removeClass("selected");
+                break;
+        }
+
+        changeInnerHTML("page-title", lang.myreservations);
+        changeInnerHTMLClass("detail-thankyou", lang.thankyou);
+        changeInnerHTMLClass("detail-summary", lang.summary);
+        changeInnerHTMLClass("detail-roomnumber", lang.roomnumber);
+        changeInnerHTMLClass("detail-checkindate", lang.checkindate);
+        changeInnerHTMLClass("detail-checkoutdate", lang.checkoutdate);
+        changeInnerHTMLClass("detail-floor", lang.floor);
+        changeInnerHTMLClass("detail-parkingspot", lang.parkingspot);
+        changeInnerHTMLClass("detail-dates", lang.dates);
+        changeInnerHTMLClass("detail-checkintime", lang.checkintime);
+        changeInnerHTMLClass("detail-checkouttime", lang.checkouttime);
+        changeInnerHTMLClass("detail-scancode", lang.scancode);
+
+
+    }
+</script>
+
 {% endblock %}
