@@ -68,9 +68,9 @@
                             <option value="6">6</option>
                         </select>
                         <select name="roomtype" class="room-search-params">
-                            <option value="Regular">Regular</option>
-                            <option value="Executive">Executive</option>
-                            <option value="President">President</option>
+                            <option id="roomtype-regular" value="Regular">Regular</option>
+                            <option id="roomtype-executive" value="Executive">Executive</option>
+                            <option id="roomtype-president" value="President">President</option>
                         </select>
                         <button type="submit" class="room-search-params" id="room-search-param-submit">Submit</button>
                     </div>
@@ -82,5 +82,48 @@
 
     </div>
 </div>
+
+<script>
+    function changePageLanguage() {
+        var en_us = {
+            roomtyperegular: "Regular",
+            roomtypeexecutive: "Executive",
+            roomtypepresident: "President",
+            roomsearchparamsubmit: "Submit",
+        }
+
+        var es_es = {
+            roomtyperegular: "Regular",
+            roomtypeexecutive: "Ejecutivo",
+            roomtypepresident: "Presidente",
+            roomsearchparamsubmit: "Enviar",
+        }
+
+        var lang
+
+        switch (sessionStorage.getItem("weblang")) {
+            case "en_us":
+                lang = en_us
+                $("#us-flag-icon").addClass("selected");
+                $("#es-flag-icon").removeClass("selected");
+                break;
+            case "es_es":
+                lang = es_es
+                $("#es-flag-icon").addClass("selected");
+                $("#us-flag-icon").removeClass("selected");
+                break;
+            default:
+                lang = en_us
+                $("#us-flag-icon").addClass("selected");
+                $("#es-flag-icon").removeClass("selected");
+                break;
+        }
+
+        changeInnerHTML("roomtype-regular", lang.roomtyperegular);
+        changeInnerHTML("roomtype-executive", lang.roomtypeexecutive);
+        changeInnerHTML("roomtype-president", lang.roomtypepresident);
+        changeInnerHTML("room-search-param-submit", lang.roomsearchparamsubmit);
+    }
+</script>
 
 {% endblock %}

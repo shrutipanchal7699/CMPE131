@@ -25,45 +25,49 @@
 </div>
 
 <script>
-    var en_us = {
-        contactus: "Contact us",
-        inputemail: "Email",
-        inputsubject: "Subject",
-        textareamessage: "Message",
-        contactussubmit: "Submit",
+    function changePageLanguage() {
+        var en_us = {
+            contactus: "Contact us",
+            inputemail: "Email",
+            inputsubject: "Subject",
+            textareamessage: "Message",
+            contactussubmit: "Submit",
+        }
+
+        var es_es = {
+            contactus: "Contácte con nosotros",
+            inputemail: "Dirección electrónica",
+            inputsubject: "Tema",
+            textareamessage: "Mensaje",
+            contactussubmit: "Enviar",
+        }
+
+        var lang
+
+        switch (sessionStorage.getItem("weblang")) {
+            case "en_us":
+                lang = en_us
+                $("#us-flag-icon").addClass("selected");
+                $("#es-flag-icon").removeClass("selected");
+                break;
+            case "es_es":
+                lang = es_es
+                $("#es-flag-icon").addClass("selected");
+                $("#us-flag-icon").removeClass("selected");
+                break;
+            default:
+                lang = en_us
+                $("#us-flag-icon").addClass("selected");
+                $("#es-flag-icon").removeClass("selected");
+                break;
+        }
+
+        document.getElementById("contact-us").innerHTML = lang.contactus;
+        document.getElementById("input-email").placeholder = lang.inputemail;
+        document.getElementById("input-subject").placeholder = lang.inputsubject;
+        document.getElementById("textarea-message").placeholder = lang.textareamessage;
+        document.getElementById("contact-us-submit").value = lang.contactussubmit;
     }
-
-    var es_es = {
-        contactus: "Contácte con nosotros",
-        inputemail: "Dirección electrónica",
-        inputsubject: "Tema",
-        textareamessage: "Mensaje",
-        contactussubmit: "Enviar",
-    }
-
-    var lang
-
-    switch (sessionStorage.getItem("weblang")) {
-        case "en_us":
-            lang = en_us
-            $("#us-flag-icon").addClass("selected");
-            break;
-        case "es_es":
-            lang = es_es
-            $("#es-flag-icon").addClass("selected");
-            break;
-        default:
-            lang = en_us
-            $("#us-flag-icon").addClass("selected");
-            break;
-    }
-
-    document.getElementById("contact-us").innerHTML = lang.contactus;
-    document.getElementById("input-email").placeholder = lang.inputemail;
-    document.getElementById("input-subject").placeholder = lang.inputsubject;
-    document.getElementById("textarea-message").placeholder = lang.textareamessage;
-    document.getElementById("contact-us-submit").value = lang.contactussubmit;
-
 </script>
 
 {% endblock %}

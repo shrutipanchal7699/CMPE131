@@ -42,14 +42,16 @@
         <div class="dropdown-menu">
             {% block dropdown %}
             {% if current_user.is_authenticated %}
-            <a class="dropdown-item" href="{{ url_for('logout') }}">Log out</a>
-            <a class="dropdown-item" href="{{ url_for('profile_page') }}">My profile</a>
-            <a class="dropdown-item" href="{{ url_for('bookings_page') }}">My reservations</a>
+            <a id="dropdown-myprofile" class="dropdown-item" href="{{ url_for('profile_page') }}">My profile</a>
+            <a id="dropdown-myreservations" class="dropdown-item" href="{{ url_for('bookings_page') }}">My reservations</a>
             {% else %}
-            <a class="dropdown-item" href="{{ url_for('auth_page') }}">Login or Register</a>
+            <a id="dropdown-loginregister" class="dropdown-item" href="{{ url_for('auth_page') }}">Login or register</a>
             {% endif %}
-            <a class="dropdown-item" href="{{ url_for('room_list_page') }}">View available rooms</a>
-            <a class="dropdown-item" href="{{ url_for('contact_us') }}">Contact Us</a>
+            <a id="dropdown-availablerooms" class="dropdown-item" href="{{ url_for('room_list_page') }}">View available rooms</a>
+            <a id="dropdown-contactus" class="dropdown-item" href="{{ url_for('contact_us') }}">Contact us</a>
+            {% if current_user.is_authenticated %}
+            <a id="dropdown-logout" class="dropdown-item" href="{{ url_for('logout') }}">Logout</a>
+            {% endif %}
             {% endblock %}
         </div>
         <div id="language-selection-div">
@@ -64,16 +66,76 @@
     <script>
         $(document).ready(function() {
 
+            changePageLanguage();
+
             $("#us-flag-icon").click(function() {
                 sessionStorage.setItem("weblang", "en_us");
-                location.reload()
+                changePageLanguage();
+                changeBaseLanguage();
             })
 
             $("#es-flag-icon").click(function() {
                 sessionStorage.setItem("weblang", "es_es");
-                location.reload()
+                changePageLanguage();
+                changeBaseLanguage();
             })
         })
+
+        function changeInnerHTML(id, newtext) {
+            var htmlelem = document.getElementById(id);
+
+            if (htmlelem) {
+                htmlelem.innerHTML = newtext;
+            }
+        }
+
+        function changeBaseLanguage() {
+            var en_us = {
+                logout: "Logout",
+                myprofile: "My profile",
+                myreservations: "My reservations",
+                loginregister: "Login or register",
+                availablerooms: "View available rooms",
+                contactus: "Contact us"
+            };
+
+            var es_es = {
+                logout: "Salir",
+                myprofile: "Mi perfil",
+                myreservations: "Mis reservas",
+                loginregister: "Iniciar sesión o registrarse",
+                availablerooms: "Ver las habitaciones disponibles",
+                contactus: "Contáctate con nosotros"
+            };
+
+            var baselang;
+
+            switch (sessionStorage.getItem("weblang")) {
+                case "en_us":
+                    baselang = en_us;
+                    $("#us-flag-icon").addClass("selected");
+                    $("#es-flag-icon").removeClass("selected");
+                    break;
+                case "es_es":
+                    baselang = es_es;
+                    $("#es-flag-icon").addClass("selected");
+                    $("#us-flag-icon").removeClass("selected");
+                    break;
+                default:
+                    baselang = en_us;
+                    $("#us-flag-icon").addClass("selected");
+                    $("#es-flag-icon").removeClass("selected");
+                    break;
+            }
+
+            changeInnerHTML("dropdown-logout", baselang.logout);
+            changeInnerHTML("dropdown-myprofile", baselang.myprofile);
+            changeInnerHTML("dropdown-myreservations", baselang.myreservations);
+            changeInnerHTML("dropdown-loginregister", baselang.loginregister);
+            changeInnerHTML("dropdown-availablerooms", baselang.availablerooms);
+            changeInnerHTML("dropdown-contactus", baselang.contactus);
+        }
+
     </script>
 </body>
 
