@@ -3,10 +3,10 @@ import datetime
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, ValidationError, IntegerField, SelectField
 from wtforms.fields.html5 import DateField
-from wtforms.validators import InputRequired, Email, Length, EqualTo
+from wtforms.validators import InputRequired, Email, Length, EqualTo, Regexp
 
-from app.models import User
-
+from app.models import User, PaymentMethod
+#VALIDATORS
 class Unique(object):
     """ validator that checks field uniqueness """
     def __init__(self, model, field, message=None):
@@ -21,6 +21,9 @@ class Unique(object):
         if check:
             raise ValidationError(self.message)
 
+
+
+#FORMS
 class LoginForm(FlaskForm):
 
     valid_user = None
@@ -183,3 +186,14 @@ class MakeReservationForm(FlaskForm):
     
     def raise_start_after_end_error(self):
         self.check_in_date.errors = [ValidationError("Start date can't come after end date")]
+
+class AddPaymentMethodForm(FlaskForm):
+    card_number = StringField(
+        'Card number', 
+        validators=[
+            InputRequired(),
+            Regexp(regex=r'^([0-9]{16})$', message="Invalid card number")
+            ])
+    name = StringField(
+        'Name on card', 
+        validators=[InputRequired(), Length(max=80)])

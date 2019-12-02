@@ -115,6 +115,7 @@ class Room(db.Model):
         bath_string = str(self.num_baths) + (" bath" if self.num_baths == 1 else " baths")
         return bed_string + ", " + bath_string
 
+
 #reservation Class 
 class Reservation(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -172,4 +173,23 @@ class Reservation(db.Model):
         return new_reservation
 
 
+class PaymentMethod(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(128))
+    card_number = db.Column(db.String(16), unique=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    user = db.relationship('User',backref=db.backref('payment_methods', lazy=True, cascade="all"))
 
+    @classmethod
+    def create(cls, name, card_number, user_id):
+        new_payment_method = cls(
+            name=name,
+            card_number=card_number,
+            user_id=user_id
+        )
+        db.session.add(new_payment_method)
+        db.session.commit()
+        return new_payment_method
+
+    def display_string(self):
+        return "●●●● ●●●● ●●●● " + self.card_number[-4:]

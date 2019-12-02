@@ -4,8 +4,15 @@ from flask import make_response, render_template, session, request, redirect, ur
 from flask_login import login_user, current_user, logout_user, login_required
 
 from app import login_manager
-from app.forms import LoginForm, RegisterForm, QueryForm, MakeReservationForm, UpdatePasswordForm, DeleteAccountForm
-from app.models import User, Room, Reservation
+from app.forms import (
+    LoginForm, 
+    RegisterForm,
+    QueryForm, 
+    MakeReservationForm, 
+    UpdatePasswordForm, 
+    DeleteAccountForm,
+    AddPaymentMethodForm)
+from app.models import User, Room, Reservation, PaymentMethod
 from app.helpers import cast_date
 
 
@@ -89,6 +96,23 @@ def configure_routes(app):
                     flash(str(error), 'delete_account_' + field.name)
         return redirect(url_for('profile_page'))
 
+    @app.route('/profile/add_payment', methods=['POST'])
+    @login_required
+    def add_payment():
+        f = AddPaymentMethodForm(data=request.form)
+        if f.validate():
+            new_payment = PaymentMethod.create(
+                name=f.name.data,
+                card_number=f.card_number.data,
+                user_id=current_user.id
+            )
+        else:
+            for field in f:
+                for error in field.errors:
+                    flash(str(error), 'add_payment_' + field.name)
+        flash('show form', "show_form_add_payment")
+        return redirect(url_for('profile_page'))
+
     #User logout 
     @app.route('/logout')
     def logout():
@@ -124,7 +148,7 @@ def configure_routes(app):
             session['check_out_date'] = request.args.get('check_out_date')
             session['num_occupants'] = cleaned_data['num_occupants']
             return render_template('roomSearchResults.html', rooms=rooms)
-        return "Hello"
+        return 404
 
     # displays the details of different rooms
     @app.route('/rooms/<id>')

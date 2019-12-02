@@ -36,15 +36,18 @@
                 <div id="profile-paymentmethods" data-toggle="collapse" data-target="#payment-method-collapse" aria-expanded="false" aria-controls="payment-method-collapse" class="accordion-card-label-div">
                     Payment Methods
                 </div>
-                <div id="payment-method-collapse" class="collapse" aria-labelledby="headingTwo" data-parent="#profile-options">
+                <div id="payment-method-collapse" class="{{resolve_form_collapse('add_payment')}}" aria-labelledby="headingTwo" data-parent="#profile-options">
                     <div class="card-body">
-                        <form action="", method="POST">
+                        <form action="{{url_for('add_payment')}}", method="POST">
                             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-                            <label class="profile-options-input text-align-center">●●●● ●●●● ●●●● 0192</label>
-                            <label class="profile-options-input text-align-center">●●●● ●●●● ●●●● 7930</label>
+                            {% for payment_method in current_user.payment_methods %} 
+                            <label class="profile-options-input text-align-center">{{ payment_method.display_string() }}</label>
+                            {% endfor %}
                             <label id="profile-addpaymentmethod" style="margin-left: 1em;">Add new payment method</label>
-                            <input id="profile-nameoncard" type="text" name="nameoncard" class="profile-options-input" placeholder="Name on card"/>
-                            <input id="profile-cardnumber" type="text" name="cardnumber" class="profile-options-input" placeholder="Card number"/>
+                            <input id="profile-nameoncard" type="text" name="name" class="profile-options-input" placeholder="Name on card"/>
+                            {{render_error('add_payment_name')}}
+                            <input id="profile-cardnumber" type="text" name="card_number" class="profile-options-input" placeholder="Card number"/>
+                            {{render_error('add_payment_card_number')}}
                             <input id="profile-pmsubmit"type="submit" class="profile-options-input" value="Add payment method"/>
                         </form>
                     </div>
