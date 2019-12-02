@@ -75,6 +75,11 @@ def configure_routes(app):
                 new_password=f.new_password.data,
                 old_password=f.password.data
             )
+        else:
+            flash('show form', 'show_form_updatepw')
+            for field in f:
+                for error in field.errors:
+                    flash(str(error), 'updatepw_' + field.name)
         return redirect(url_for('profile_page'))
 
     @app.route('/profile/delete', methods=['POST'])
@@ -123,8 +128,6 @@ def configure_routes(app):
             session['check_out_date'] = request.args.get('check_out_date')
             session['num_occupants'] = cleaned_data['num_occupants']
             return render_template('roomSearchResults.html', rooms=rooms)
-        else:
-            pass
         return "Hello"
 
     # displays the details of different rooms
