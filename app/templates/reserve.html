@@ -11,8 +11,8 @@
 <div id="reserve-main-div" class="flex-viewport-div">
     <div id="reserve-detail-div">
         <div class="details">
-            <h1>{{ room.room_type }}</h1>
-            <h4>{{ room.accomodations }}</h4>
+            <h1>{{ room.room_type.value }}</h1>
+            <h4>{{ room.accomodations() }}</h4>
         </div>
         <ul class="amenities">
             <li>Free Wireless Internet</li>
