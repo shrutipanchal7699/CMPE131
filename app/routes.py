@@ -21,7 +21,6 @@ def configure_routes(app):
             return redirect(url_for('room_list_page'))
         return render_template('auth.html')
 
-
     @app.route('/login', methods=['POST'])
     def login():
         f = LoginForm(data=request.form)
@@ -153,8 +152,6 @@ def configure_routes(app):
 
         return render_template('reserve.html', **data)
 
-    
-    
     #Bookings Page
     @app.route('/bookings')
     @login_required
@@ -165,7 +162,6 @@ def configure_routes(app):
         }
         return render_template('bookings.html', **data)
     
-
     #CancelReservation Page
     @app.route('/bookings/<res_id>/cancel')
     @login_required
