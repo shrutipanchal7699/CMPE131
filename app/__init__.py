@@ -24,3 +24,5 @@ def create_app(conf=config.Config):
     configure_routes(app)
 
     return app
+
+app = create_app()
