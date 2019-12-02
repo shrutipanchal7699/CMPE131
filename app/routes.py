@@ -16,10 +16,10 @@ def configure_routes(app):
         return redirect(url_for('room_list_page'))
 
     @app.route('/auth')
-    def auth_page(form=None):
+    def auth_page():
         if current_user.is_authenticated:
             return redirect(url_for('room_list_page'))
-        return render_template('auth.html', **data)
+        return render_template('auth.html')
 
 
     @app.route('/login', methods=['POST'])
