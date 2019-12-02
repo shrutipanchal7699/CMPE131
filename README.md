@@ -92,6 +92,20 @@ a. Open the menu on the top right, and select "My reservations"
 b. Click cancel on any of the reservations listed.
 
 
-* Some of these use cases do not have a well designed UI yet. However, the design is in progress.
+#### III. Additional features:
+**1. Spanish version**
+To change the language, press the flag icon on the top right for the corresponding language desired.
+**2. Auto-scroll on submit**
+When the user submits parameters for search, the webpage will would auto-scroll to the first result.
+**3. Send email to support**
+Under the menu
+a. Click "Contact us"
+b. Fill up the form and submit
+**4. Save payment methods**
+Under the menu
+a. Click "My profile"
+b. Click "Payment Methods"
+c. Under "Add new payment method," fill up the form
+d. Submit
 
 
