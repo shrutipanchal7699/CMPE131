@@ -4,8 +4,15 @@ from flask import make_response, render_template, session, request, redirect, ur
 from flask_login import login_user, current_user, logout_user, login_required
 
 from app import login_manager
-from app.forms import LoginForm, RegisterForm, QueryForm, MakeReservationForm, UpdatePasswordForm, DeleteAccountForm
-from app.models import User, Room, Reservation
+from app.forms import (
+    LoginForm, 
+    RegisterForm,
+    QueryForm, 
+    MakeReservationForm, 
+    UpdatePasswordForm, 
+    DeleteAccountForm,
+    AddPaymentMethodForm)
+from app.models import User, Room, Reservation, PaymentMethod
 from app.helpers import cast_date
 
 
@@ -16,20 +23,10 @@ def configure_routes(app):
         return redirect(url_for('room_list_page'))
 
     @app.route('/auth')
-    @app.route('/auth/<form>')
-    def auth_page(form=None):
+    def auth_page():
         if current_user.is_authenticated:
             return redirect(url_for('room_list_page'))
-        data = {
-                'register_collapse': 'collapse',
-                'login_collapse': 'collapse'
-            }
-        if form == 'login':
-            data['login_collapse'] = 'collapse show'
-        elif form == 'register':
-            data['register_collapse'] = 'collapse show'
-        return render_template('auth.html', **data)
-
+        return render_template('auth.html')
 
     @app.route('/login', methods=['POST'])
     def login():
@@ -40,10 +37,11 @@ def configure_routes(app):
             return redirect(url_for('room_list_page'))
         else:
             #put login errors in flash
+            flash('show form', 'show_form_login')
             for field in f:
                 for error in field.errors:
                     flash(str(error), 'login_' + field.name)
-        return redirect(url_for('auth_page', form='login'))
+        return redirect(url_for('auth_page'))
 
     @app.route('/register', methods=['POST'])
     def register():
@@ -53,10 +51,11 @@ def configure_routes(app):
             login_user(new_user)
             return redirect(url_for('room_list_page'))
         else:
+            flash('show form', 'show_form_register')
             for field in f:
                 for error in field.errors:
                     flash(str(error), 'register_' + field.name)
-        return redirect(url_for('auth_page', form='register'))
+        return redirect(url_for('auth_page'))
 
     @app.route('/profile')
     @login_required
@@ -75,6 +74,11 @@ def configure_routes(app):
                 new_password=f.new_password.data,
                 old_password=f.password.data
             )
+        else:
+            flash('show form', 'show_form_updatepw')
+            for field in f:
+                for error in field.errors:
+                    flash(str(error), 'updatepw_' + field.name)
         return redirect(url_for('profile_page'))
 
     @app.route('/profile/delete', methods=['POST'])
@@ -85,7 +89,28 @@ def configure_routes(app):
             current_user.delete_account(password=f.password.data)
             logout_user()
             return redirect(url_for('auth_page'))
- 
+        else:
+            flash('show form', 'show_form_delete_account')
+            for field in f:
+                for error in field.errors:
+                    flash(str(error), 'delete_account_' + field.name)
+        return redirect(url_for('profile_page'))
+
+    @app.route('/profile/add_payment', methods=['POST'])
+    @login_required
+    def add_payment():
+        f = AddPaymentMethodForm(data=request.form)
+        if f.validate():
+            new_payment = PaymentMethod.create(
+                name=f.name.data,
+                card_number=f.card_number.data,
+                user_id=current_user.id
+            )
+        else:
+            for field in f:
+                for error in field.errors:
+                    flash(str(error), 'add_payment_' + field.name)
+        flash('show form', "show_form_add_payment")
         return redirect(url_for('profile_page'))
 
     #User logout 
@@ -123,9 +148,7 @@ def configure_routes(app):
             session['check_out_date'] = request.args.get('check_out_date')
             session['num_occupants'] = cleaned_data['num_occupants']
             return render_template('roomSearchResults.html', rooms=rooms)
-        else:
-            pass
-        return "Hello"
+        return 404
 
     # displays the details of different rooms
     @app.route('/rooms/<id>')
@@ -153,8 +176,6 @@ def configure_routes(app):
 
         return render_template('reserve.html', **data)
 
-    
-    
     #Bookings Page
     @app.route('/bookings')
     @login_required
@@ -165,7 +186,6 @@ def configure_routes(app):
         }
         return render_template('bookings.html', **data)
     
-
     #CancelReservation Page
     @app.route('/bookings/<res_id>/cancel')
     @login_required

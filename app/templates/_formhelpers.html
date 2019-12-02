@@ -22,3 +22,14 @@
   {% endif %}
   {% endwith %}
 {% endmacro %}
+
+{% macro resolve_form_collapse(form_name) %}
+  {% with signal = get_flashed_messages(category_filter=[('show_form_' + form_name)]) %}
+  {% if signal %}
+  collapse show
+  {% else %}
+  collapse
+  {% endif %}
+  {% endwith %}
+
+{% endmacro %}

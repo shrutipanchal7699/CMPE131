@@ -7,7 +7,7 @@
 
 {% block body %}
 
-{% from "_formhelpers.html" import render_error %}
+{% from "_formhelpers.html" import render_error, resolve_form_collapse  %}
 
 
 
@@ -18,7 +18,7 @@
                 <div id="login-header" data-toggle="collapse" data-target="#login-collapse" aria-expanded="true" aria-controls="login-collapse" class="accordion-card-label-div">
                     Login
                 </div>
-                <div id="login-collapse" class="{{login_collapse}}" aria-labelledby="headingOne" data-parent="#login-signup-switch">
+                <div id="login-collapse" class="{{resolve_form_collapse('login')}}" aria-labelledby="headingOne" data-parent="#login-signup-switch">
                     <div class="card-body">
                         <form method="POST" action="{{ url_for('login') }}" class="login-signup-form">
                             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
@@ -34,7 +34,7 @@
                 <div id="signup-header" data-toggle="collapse" data-target="#signup-collapse" aria-expanded="false" aria-controls="signup-collapse" class="accordion-card-label-div">
                     Signup
                 </div>
-                <div id="signup-collapse" class="{{register_collapse}}" aria-labelledby="headingTwo" data-parent="#login-signup-switch">
+                <div id="signup-collapse" class="{{resolve_form_collapse('register')}}" aria-labelledby="headingTwo" data-parent="#login-signup-switch">
                 <div class="card-body">
                         <form method="POST" action="{{ url_for('register') }}" class="login-signup-form">
                             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>

@@ -1,3 +1,4 @@
+import enum
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -58,11 +59,18 @@ class User(UserMixin, db.Model):
 
 
     
+class RoomType(enum.Enum):
+    Regular = 'Regular'
+    Executive = 'Executive'
+    Presidential = 'Presidential'
+
 #class for Room 
 class Room(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    accomodations = db.Column(db.String(128), nullable=False)
-    room_type = db.Column(db.String(128), nullable=False)
+    num_beds = db.Column(db.Integer, nullable=False)
+    num_baths = db.Column(db.Integer, nullable=False)
+
+    room_type = db.Column(db.Enum(RoomType), nullable=False)
     price = db.Column(db.Float, nullable=False)
     max_occupants = db.Column(db.Integer, nullable=False)
 
@@ -101,6 +109,12 @@ class Room(db.Model):
         conflicting_reservations = Reservation.find_conflicting_reservations(self.id, start, end)
         # return true if no conflicting reservations exist
         return len(conflicting_reservations) == 0
+    
+    def accomodations(self):
+        bed_string = str(self.num_beds) + (" bed" if self.num_beds == 1 else " beds")
+        bath_string = str(self.num_baths) + (" bath" if self.num_baths == 1 else " baths")
+        return bed_string + ", " + bath_string
+
 
 #reservation Class 
 class Reservation(db.Model):
@@ -159,4 +173,23 @@ class Reservation(db.Model):
         return new_reservation
 
 
+class PaymentMethod(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(128))
+    card_number = db.Column(db.String(16), unique=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    user = db.relationship('User',backref=db.backref('payment_methods', lazy=True, cascade="all"))
 
+    @classmethod
+    def create(cls, name, card_number, user_id):
+        new_payment_method = cls(
+            name=name,
+            card_number=card_number,
+            user_id=user_id
+        )
+        db.session.add(new_payment_method)
+        db.session.commit()
+        return new_payment_method
+
+    def display_string(self):
+        return "●●●● ●●●● ●●●● " + self.card_number[-4:]

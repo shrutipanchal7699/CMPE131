@@ -29,6 +29,3 @@ class RouteTest(TestCase):
         response = self.client.get('/rooms')
         assert response.status_code == 200
 
-    def test_room_detail_page(self):
-        response = self.client.get('/rooms/2')
-        assert response.status_code == 200

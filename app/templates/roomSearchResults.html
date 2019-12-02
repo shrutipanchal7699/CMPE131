@@ -5,8 +5,8 @@
         <img class="room-image" src="../static/images/rooms/regular/1.jpg">
     </div>
     <div class="search-item-brief-details" onclick="location.href='{{ url_for("room_detail_page", id=room.id)}}';">
-        <h1>{{ room.accomodations }}</h1>
-        <h4>{{ room.room_type }}</h4>
+        <h1>{{ room.accomodations() }}</h1>
+        <h4>{{ room.room_type.value }}</h4>
         <ul>
             <li>Wifi</li>
             <li>Toiletries</li>

@@ -6,26 +6,7 @@
 {% endblock %}
 
 {% block body %}
-{% from "_formhelpers.html" import render_field %}
-
-<!-- <h1>User Name</h1>
-
-<h2>Update password</h2>
-<form action="{{ url_for('update_password') }}" method="POST">
-    {{ update_pw_form.hidden_tag() }}
-    {{render_field(update_pw_form.new_password)}}
-    {{render_field(update_pw_form.password)}}
-    {{render_field(update_pw_form.confirm)}}
-    <input type="submit" value="Submit" />
-</form>
-
-<h2>Delete account</h2>
-<form action="{{ url_for('delete_account') }}", method="POST">
-    {{ delete_form.hidden_tag() }}
-    {{render_field(delete_form.password)}}
-    {{render_field(delete_form.confirm)}}
-    <input type="submit" value="Submit" />
-</form> -->
+{% from "_formhelpers.html" import render_error, resolve_form_collapse %}
 
 <div id="profile-main-div" class="flex-viewport-div">
     <div id="profile-options-container">
@@ -33,16 +14,19 @@
         <h2 style="color:rgb(71, 74, 76); margin-bottom: 1em;">Waffle</h2>
         <div class="accordion" id="profile-options">
             <div class="card">
-                <div id="profile-changepassword" data-toggle="collapse" data-target="#change-pass-collapse" aria-expanded="true" aria-controls="change-pass-collapse" class="accordion-card-label-div">
+                <div id="profile-changepassword" data-toggle="collapse" data-target="#change-pass-collapse" class="accordion-card-label-div">
                     Change Password
                 </div>
-                <div id="change-pass-collapse" class="collapse" aria-labelledby="headingOne" data-parent="#profile-options">
+                <div id="change-pass-collapse" class="{{resolve_form_collapse('updatepw')}}" aria-labelledby="headingOne" data-parent="#profile-options">
                     <div class="card-body">
                         <form action="{{ url_for('update_password') }}" method="POST" class="login-signup-form">
                             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                             <input id="profile-cpnewpassword" type="password" name="new_password" class="profile-options-input" placeholder="New password"/>
+                            {{render_error('updatepw_new_password')}}
                             <input id="profile-cpoldpassword" type="password" name="password" class="profile-options-input" placeholder="Old password"/>
+                            {{render_error('updatepw_password')}}
                             <input id="profile-cprepoldpassword" type="password" name="confirm" class="profile-options-input" placeholder="Repeat old password"/>
+                            {{render_error('updatepw_confirm')}}
                             <input id="profile-cpsubmit" type="submit" class="profile-options-input" value="Change password"/>
                         </form>
                     </div>
@@ -52,15 +36,18 @@
                 <div id="profile-paymentmethods" data-toggle="collapse" data-target="#payment-method-collapse" aria-expanded="false" aria-controls="payment-method-collapse" class="accordion-card-label-div">
                     Payment Methods
                 </div>
-                <div id="payment-method-collapse" class="collapse" aria-labelledby="headingTwo" data-parent="#profile-options">
+                <div id="payment-method-collapse" class="{{resolve_form_collapse('add_payment')}}" aria-labelledby="headingTwo" data-parent="#profile-options">
                     <div class="card-body">
-                        <form action="", method="POST">
+                        <form action="{{url_for('add_payment')}}", method="POST">
                             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-                            <label class="profile-options-input text-align-center">●●●● ●●●● ●●●● 0192</label>
-                            <label class="profile-options-input text-align-center">●●●● ●●●● ●●●● 7930</label>
+                            {% for payment_method in current_user.payment_methods %} 
+                            <label class="profile-options-input text-align-center">{{ payment_method.display_string() }}</label>
+                            {% endfor %}
                             <label id="profile-addpaymentmethod" style="margin-left: 1em;">Add new payment method</label>
-                            <input id="profile-nameoncard" type="text" name="nameoncard" class="profile-options-input" placeholder="Name on card"/>
-                            <input id="profile-cardnumber" type="text" name="cardnumber" class="profile-options-input" placeholder="Card number"/>
+                            <input id="profile-nameoncard" type="text" name="name" class="profile-options-input" placeholder="Name on card"/>
+                            {{render_error('add_payment_name')}}
+                            <input id="profile-cardnumber" type="text" name="card_number" class="profile-options-input" placeholder="Card number"/>
+                            {{render_error('add_payment_card_number')}}
                             <input id="profile-pmsubmit"type="submit" class="profile-options-input" value="Add payment method"/>
                         </form>
                     </div>
@@ -70,12 +57,14 @@
                 <div id="profile-deleteaccount" data-toggle="collapse" data-target="#delete-acc-collapse" aria-expanded="false" aria-controls="delete-acc-collapse" class="accordion-card-label-div">
                     Delete Account
                 </div>
-                <div id="delete-acc-collapse" class="collapse" aria-labelledby="headingTwo" data-parent="#profile-options">
+                <div id="delete-acc-collapse" class="{{resolve_form_collapse('delete_account')}}" aria-labelledby="headingTwo" data-parent="#profile-options">
                     <div class="card-body">
                         <form action="{{ url_for('delete_account') }}", method="POST">
                             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                             <input id="profile-dapassword" type="password" name="password" class="profile-options-input" placeholder="Password"/>
+                            {{render_error('delete_account_password')}}
                             <input id="profile-dareppassword" type="password" name="confirm" class="profile-options-input" placeholder="Repeat password"/>
+                            {{render_error('delete_account_confirm')}}
                             <input id="profile-dasubmit" type="submit" class="profile-options-input" value="Delete Account"/>
                         </form>
                     </div>
