@@ -16,18 +16,9 @@ def configure_routes(app):
         return redirect(url_for('room_list_page'))
 
     @app.route('/auth')
-    @app.route('/auth/<form>')
     def auth_page(form=None):
         if current_user.is_authenticated:
             return redirect(url_for('room_list_page'))
-        data = {
-                'register_collapse': 'collapse',
-                'login_collapse': 'collapse'
-            }
-        if form == 'login':
-            data['login_collapse'] = 'collapse show'
-        elif form == 'register':
-            data['register_collapse'] = 'collapse show'
         return render_template('auth.html', **data)
 
 
@@ -40,10 +31,11 @@ def configure_routes(app):
             return redirect(url_for('room_list_page'))
         else:
             #put login errors in flash
+            flash('show form', 'show_form_login')
             for field in f:
                 for error in field.errors:
                     flash(str(error), 'login_' + field.name)
-        return redirect(url_for('auth_page', form='login'))
+        return redirect(url_for('auth_page'))
 
     @app.route('/register', methods=['POST'])
     def register():
@@ -53,10 +45,11 @@ def configure_routes(app):
             login_user(new_user)
             return redirect(url_for('room_list_page'))
         else:
+            flash('show form', 'show_form_register')
             for field in f:
                 for error in field.errors:
                     flash(str(error), 'register_' + field.name)
-        return redirect(url_for('auth_page', form='register'))
+        return redirect(url_for('auth_page'))
 
     @app.route('/profile')
     @login_required
@@ -90,7 +83,11 @@ def configure_routes(app):
             current_user.delete_account(password=f.password.data)
             logout_user()
             return redirect(url_for('auth_page'))
- 
+        else:
+            flash('show form', 'show_form_delete_account')
+            for field in f:
+                for error in field.errors:
+                    flash(str(error), 'delete_account_' + field.name)
         return redirect(url_for('profile_page'))
 
     #User logout 
