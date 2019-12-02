@@ -26,6 +26,7 @@
                             <input id="profile-cpoldpassword" type="password" name="password" class="profile-options-input" placeholder="Old password"/>
                             {{render_error('updatepw_password')}}
                             <input id="profile-cprepoldpassword" type="password" name="confirm" class="profile-options-input" placeholder="Repeat old password"/>
+                            {{render_error('updatepw_confirm')}}
                             <input id="profile-cpsubmit" type="submit" class="profile-options-input" value="Change password"/>
                         </form>
                     </div>
@@ -53,12 +54,14 @@
                 <div id="profile-deleteaccount" data-toggle="collapse" data-target="#delete-acc-collapse" aria-expanded="false" aria-controls="delete-acc-collapse" class="accordion-card-label-div">
                     Delete Account
                 </div>
-                <div id="delete-acc-collapse" class="collapse" aria-labelledby="headingTwo" data-parent="#profile-options">
+                <div id="delete-acc-collapse" class="{{resolve_form_collapse('delete_account')}}" aria-labelledby="headingTwo" data-parent="#profile-options">
                     <div class="card-body">
                         <form action="{{ url_for('delete_account') }}", method="POST">
                             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                             <input id="profile-dapassword" type="password" name="password" class="profile-options-input" placeholder="Password"/>
+                            {{render_error('delete_account_password')}}
                             <input id="profile-dareppassword" type="password" name="confirm" class="profile-options-input" placeholder="Repeat password"/>
+                            {{render_error('delete_account_confirm')}}
                             <input id="profile-dasubmit" type="submit" class="profile-options-input" value="Delete Account"/>
                         </form>
                     </div>
