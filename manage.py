@@ -10,7 +10,7 @@ manager = Manager(app)
 def resetdb():
     if os.path.exists("app/app.db"):
         os.remove("app/app.db")
-        db.create_all()
+    db.create_all()
 
 if __name__ == "__main__":
     manager.run()
