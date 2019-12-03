@@ -2,6 +2,9 @@
 **App Deployment**
 Through Heroku: https://hotel-calisto.herokuapp.com/rooms
 
+**Travis-CI STATUS IMAGE **
+[![Build Status](https://travis-ci.com/shrutipanchal7699/CMPE131.svg?branch=master)](https://travis-ci.com/shrutipanchal7699/CMPE131)
+
 
 #### I. How to run the app:
 
