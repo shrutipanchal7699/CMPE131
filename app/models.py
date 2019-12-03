@@ -58,7 +58,7 @@ class User(UserMixin, db.Model):
             db.session.commit()
 
 
-    
+
 class RoomType(enum.Enum):
     Regular = 'Regular'
     Executive = 'Executive'
