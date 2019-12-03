@@ -1,3 +1,8 @@
+
+**App Deployment**
+Through Heroku: https://hotel-calisto.herokuapp.com/rooms
+
+
 #### I. How to run the app:
 
 **1. Prerequisites:** 
@@ -107,10 +112,6 @@ a. Click "My profile"
 b. Click "Payment Methods"
 c. Under "Add new payment method," fill up the form
 d. Submit
-
-
-**App Deployment**
-Through Heroku: https://hotel-calisto.herokuapp.com/rooms
 
 
 
