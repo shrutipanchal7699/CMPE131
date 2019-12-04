@@ -14,8 +14,8 @@
             <img class="room-image" src="../static/images/rooms/regular/1.jpg">
         </div>
         <div class="search-item-brief-details">
-            <h1>{{ reservation.room.room_type }}</h1>
-            <h4>{{ reservation.room.accomodations }}</h4>
+            <h1>{{ reservation.room.room_type.value }}</h1>
+            <h4>{{ reservation.room.accomodations() }}</h4>
             <p><span class="detail-room-number">Room#:</span> 308</p>
             <p><span class="detail-checkindate">Check In Date:</span> {{ reservation.check_in_date }}</p>
             <p><span class="detail-checkoutdate">Check Out Date:</span> {{ reservation.check_out_date }}</p>
