@@ -1,7 +1,7 @@
 
 **App Deployment**
 
-Through Heroku: https://hotel-calisto.herokuapp.com/rooms
+Through Heroku: https://hotel-calisto-backup.herokuapp.com/
 
 **Travis-CI STATUS IMAGE**
 
