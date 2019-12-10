@@ -40,14 +40,19 @@ On Windows:
 On Mac/Linux:
 >$ export FLASK_APP="HotelApp.py"
 >$ export FLASK_DEBUG=1 (optional when debugging)
->$ export MAIL_USERNAME=
->$ export MAIL_PASSWORD=
+>$ export MAIL_USERNAME=hotelcallisto131@gmail.com
+>$ export MAIL_PASSWORD=hotelcallisto1234!
 
 On Windows:
 >$ set FLASK_APP="HotelApp.py"
 >$ set FLASK_DEBUG=1 (optional when debugging)
->$ export MAIL_USERNAME=
->$ export MAIL_PASSWORD=
+>$ export MAIL_USERNAME=hotelcallisto131@gmail.com
+>$ export MAIL_PASSWORD=hotelcallisto1234!
+
+**6. Initiate database file:**
+>$ flask db init
+>$ flask db migrate
+>$ flask db upgrade
 
 **6. Run the app:**
 >$ flask run

@@ -19,7 +19,7 @@ class RouteTest(TestCase):
 
     def test_home_page(self):
         response = self.client.get('/')
-        assert response.status_code == 302
+        assert response.status_code == 200
 
     def test_auth_page(self):
         response = self.client.get('/auth')
