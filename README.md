@@ -40,16 +40,24 @@ On Windows:
 On Mac/Linux:
 >$ export FLASK_APP="HotelApp.py"
 >$ export FLASK_DEBUG=1 (optional when debugging)
+>$ export MAIL_USERNAME=
+>$ export MAIL_PASSWORD=
 
 On Windows:
 >$ set FLASK_APP="HotelApp.py"
 >$ set FLASK_DEBUG=1 (optional when debugging)
+>$ export MAIL_USERNAME=
+>$ export MAIL_PASSWORD=
 
 **6. Run the app:**
 >$ flask run
 
+#### II. Testing:
+Test folder: app/tests
+To run tests: 
+>$ pytest
 
-#### II. Use cases:
+#### III. Use cases:
 
 **1. Login and Registration**
 a. On the hompage, click Menu button on the top right and select "Login or Register"
@@ -102,7 +110,7 @@ a. Open the menu on the top right, and select "My reservations"
 b. Click cancel on any of the reservations listed.
 
 
-#### III. Additional features:
+#### IV. Additional features:
 **1. Spanish version**
 To change the language, press the flag icon on the top right for the corresponding language desired.
 
