@@ -1,0 +1,26 @@
+Functions
+=========
+
+.. automodule:: app.routes
+    :members:
+    :undoc-members:
+
+.. automodule:: app.models
+    :members:
+    :undoc-members:
+
+.. automodule:: app.login_manager
+    :members:
+    :undoc-members:
+
+.. automodule:: app.helpers
+    :members:
+    :undoc-members:
+
+.. automodule:: app.forms
+    :members:
+    :undoc-members:
+
+.. automodule:: app.config
+    :members:
+    :undoc-members:
