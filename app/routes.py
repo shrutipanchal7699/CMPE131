@@ -2,6 +2,7 @@ from datetime import timedelta, date, datetime
 
 from flask import make_response, render_template, session, request, redirect, url_for, flash
 from flask_login import login_user, current_user, logout_user, login_required
+from flask_mail import Message, Mail
 
 from app import login_manager
 from app.forms import (
@@ -15,12 +16,9 @@ from app.forms import (
 from app.models import User, Room, Reservation, PaymentMethod
 from app.helpers import cast_date
 
+mail = Mail()
 
 def configure_routes(app):
-
-    @app.route('/')
-    def home_page():
-        return redirect(url_for('room_list_page'))
 
     @app.route('/auth')
     def auth_page():
@@ -127,6 +125,7 @@ def configure_routes(app):
     
 
     #displays list of rooms to the user
+    @app.route('/')
     @app.route('/rooms')
     def room_list_page():
         return render_template('roomList.html')
@@ -195,3 +194,16 @@ def configure_routes(app):
         """
         current_user.delete_reservation(res_id)
         return redirect(url_for('bookings_page'))
+
+    @app.route('/contact', methods=['POST'])
+    def send_mail():
+        sender = current_user.email if current_user.is_authenticated else request.form.get('email', 'Anonymous')
+        body="Message from " + sender + ":\n\n" + request.form.get('message', 'No body')
+        msg = Message(
+            subject=request.form.get('subject', 'No Subject'),
+            body=body,
+            sender=sender,
+            recipients=["hotelcallisto131@gmail.com"]
+            )
+        mail.send(msg)
+        return redirect(url_for('room_list_page'))
