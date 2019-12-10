@@ -13,11 +13,12 @@
 
     </div>
     <div id="email-form-container">
-        <form id="email-form">
+        <form id="email-form" action="{{url_for('send_mail')}}" method="POST">
             <h1 id="contact-us">Contact us</h1>
-            <input id="input-email" type="email" class="invalid" placeholder="Email"/>
-            <input id="input-subject" type="text" placeholder="Subject"/>
-            <textarea id="textarea-message" type="text" placeholder="Message"></textarea>
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+            <input name="email" id="input-email" type="email" placeholder="Email"/>
+            <input name="subject" id="input-subject" type="text" placeholder="Subject"/>
+            <textarea name="message" id="textarea-message" type="text" placeholder="Message"></textarea>
             <input id="contact-us-submit" type="submit" value="Submit">
         </form>
         <p>hotelcallisto@callisto.com</p>
