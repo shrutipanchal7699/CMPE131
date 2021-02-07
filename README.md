@@ -65,7 +65,7 @@ To run tests:
 #### III. Use cases:
 
 **1. Login and Registration**
-a. On the hompage, click Menu button on the top right and select "Login or Register"
+a. On the homepage, click Menu button on the top right and select "Login or Register"
 b. Signup for an account
 c. Confirm that user is signed it by checking if "Logout" option is listed in the Menu
 
@@ -91,11 +91,11 @@ a. From the home page:
     Select 1 or 2
     Select Regular
 b. Submit
-c. Scroll down to check results
+c. Scroll down to check results.
 
 **5. View Room detail**
 a. Click a card from the results list, this will take the user to the details
-page of that specific room
+page of that specific room.
 
 **6. Book room**
 To book a room, the user must be logged in. However, the user could select the room first before booking.
@@ -107,11 +107,11 @@ c. Click submit to finalize the booking process
 
 **7. View Reservation**
 To view a reservation, the user must be logged in.
-a. Open the menu on the top right, and select "My reservations"
+a. Open the menu on the top right, and select "My reservations".
 
 **8. Cancel Reservation**
 To cancel a reservation, the user must be logged in.
-a. Open the menu on the top right, and select "My reservations"
+a. Open the menu on the top right, and select "My reservations".
 b. Click cancel on any of the reservations listed.
 
 
